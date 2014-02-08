@@ -42,6 +42,13 @@ class Marvel(object):
         print url
         return requests.get(url)
 
+    def _params(self, params):
+        """
+        Takes dictionary of parameters and returns
+        urlencoded string 
+        """
+        return urllib.urlencode(params)
+
     def _auth(self):
         ts = datetime.datetime.now().strftime("%Y-%m-%d%H:%M:%S")
         hash_string = hashlib.md5("%s%s%s" % (ts, self.private_key, self.public_key)).hexdigest()
@@ -62,12 +69,9 @@ class Marvel(object):
 
     def get_characters(self, *args, **kwargs):
         #characters/
-        params = "orderBy=name,-modified&limit=10"
-        url = "%s" % Character.resource_url()
-
         characters = []
-        #pass url and params to _call
-        response = json.loads(self._call(url, params).text)
+        #pass url string and params string to _call
+        response = json.loads(self._call(Character.resource_url(), self._params(kwargs)).text)
         for character in response['data']['results']:
             characters.append(Character(self, character))
             
