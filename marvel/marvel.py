@@ -26,29 +26,52 @@ class Marvel(object):
     def _endpoint(self):
         return "http://gateway.marvel.com/%s/public/" % (DEFAULT_API_VERSION)
 
-    def _call(self, resource_url):
+    def _call(self, resource_url, params=None):
         """
         Calls Marvel API
         Returns Requests reponse
         """
-        url = "%s%s%s" % (self._endpoint(), resource_url, self._auth())
+        
+        url = "%s%s" % (self._endpoint(), resource_url)
+        if params:
+            url += "?%s&%s" % (params, self._auth())
+        else:
+            url += "?%s" % self._auth()
+        
         print "url:"
         print url
         return requests.get(url)
 
-
     def _auth(self):
-        print "auth:"
         ts = datetime.datetime.now().strftime("%Y-%m-%d%H:%M:%S")
-        print ts
         hash_string = hashlib.md5("%s%s%s" % (ts, self.private_key, self.public_key)).hexdigest()
-        print hash_string
-        print ""
-        return "?ts=%s&apikey=%s&hash=%s" % (ts, self.public_key, hash_string)
+        return "ts=%s&apikey=%s&hash=%s" % (ts, self.public_key, hash_string)
 
+
+
+
+
+    #public methods
     def get_character(self, id):
-        #character/:id/
-        url = "%s%s" % (Character.resource_url(), id)
-        return Character( self, json.loads(self._call(url).text) )
+        #characters/:id/
+        url = "%s/%s" % (Character.resource_url(), id)
+        response = json.loads(self._call(url).text)
+        
+        #create Character from first item in 'results'
+        return Character( self,  response['data']['results'][0] )
+
+    def get_characters(self, *args, **kwargs):
+        #characters/
+        params = "orderBy=name,-modified&limit=10"
+        url = "%s" % Character.resource_url()
+
+        characters = []
+        #pass url and params to _call
+        response = json.loads(self._call(url, params).text)
+        for character in response['data']['results']:
+            characters.append(Character(self, character))
+            
+        return characters
+
 
 

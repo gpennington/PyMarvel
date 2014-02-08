@@ -9,16 +9,15 @@ class MarvelObject(object):
     Base class for all Marvel API classes
     """
 
-    def __init__(self, marvel, _dict):
+    def __init__(self, marvel, dict):
         """
         init
         marvel - instance of Marvel class caller
-        _dict - dict of object
+        dict - dict of object, used to create MarvelObject
         
         """
         self.marvel = marvel
-        self.dict = _dict
-
+        self.dict = dict
         
     def __unicode__(self):
         return self.dict['name']

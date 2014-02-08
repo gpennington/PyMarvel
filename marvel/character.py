@@ -12,9 +12,9 @@ class Character(MarvelObject):
     Character object
     Takes a dict of character attrs
     """
-    _resource_url = 'characters/'
+    _resource_url = 'characters'
 
-    """
+
     @property
     def id(self):
         return self.dict['id']
@@ -22,4 +22,7 @@ class Character(MarvelObject):
     @property
     def name(self):
         return self.dict['name']
-    """
+
+    @property
+    def description(self):
+        return self.dict['description']
