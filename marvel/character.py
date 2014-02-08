@@ -4,6 +4,7 @@ __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
 import json
+from datetime import datetime
 
 from .core import MarvelObject
 from .comic import Comic
@@ -27,6 +28,50 @@ class Character(MarvelObject):
     @property
     def description(self):
         return self.dict['description']
+
+    @property
+    def modified(self):
+        """ Converts '2013-11-20T17:40:18-0500' to 'datetime' object """
+        #Hacked off %z timezone because reasons
+        return datetime.strptime(self.dict['modified'][:-6], '%Y-%m-%dT%H:%M:%S')
+
+    @property
+    def modified_raw(self):
+        return self.dict['modified']
+
+    @property
+    def resourceURI(self):
+        return self.dict['resourceURI']
+
+    @property
+    def urls(self):
+        return self.dict['urls']
+
+    @property
+    def wiki(self):
+        for item in self.dict['urls']:
+            if item['type'] == 'wiki':
+                return item['url']
+        return None
+
+    @property
+    def detail(self):
+        for item in self.dict['urls']:
+            if item['type'] == 'detail':
+                return item['url']
+        return None
+
+    @property
+    def thumbnail(self):
+        return "%s.%s" % (self.dict['thumbnail']['path'], self.dict['thumbnail']['extension'] )
+
+
+    """
+    comics (ComicList, optional): A resource list containing comics which feature this character.,
+    stories (StoryList, optional): A resource list of stories in which this character appears.,
+    events (EventList, optional): A resource list of events in which this character appears.,
+    series (SeriesList, optional): A resource list of series in which this character appears.
+    """
 
     @property
     def comics(self):
