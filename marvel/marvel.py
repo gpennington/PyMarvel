@@ -10,7 +10,7 @@ import datetime
 
 import requests
 
-from .character import Character
+from .character import Character, CharacterDataWrapper
 from .comic import Comic
 
 DEFAULT_API_VERSION = 'v1'
@@ -64,6 +64,8 @@ class Marvel(object):
         #characters/:id/
         url = "%s/%s" % (Character.resource_url(), id)
         response = json.loads(self._call(url).text)
+        
+        return CharacterDataWrapper(self, response)
         
         #create Character from first item in 'results'
         return Character( self,  response['data']['results'][0] )

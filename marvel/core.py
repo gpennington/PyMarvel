@@ -28,3 +28,63 @@ class MarvelObject(object):
     @classmethod
     def resource_url(cls):
         return cls._resource_url
+
+class DataWrapper(object):
+    """
+    DataWrapper object
+    """
+
+    def __init__(self, marvel, dict):
+        """
+        init
+        marvel - instance of Marvel class caller
+        dict - dict of object, used to create MarvelObject
+        
+        """
+        self.marvel = marvel
+        self.dict = dict
+
+
+    @property
+    def code(self):
+        return self.dict['code']
+
+    @property
+    def status(self):
+        return self.dict['status']
+
+    @property
+    def etag(self):
+        return self.dict['etag']
+
+class DataContainer(object):
+    """
+    DataContainer object
+    """
+
+    def __init__(self, marvel, dict):
+        """
+        init
+        marvel - instance of Marvel class caller
+        dict - dict of object, used to create MarvelObject
+
+        """
+        self.marvel = marvel
+        self.dict = dict
+
+
+    @property
+    def offset(self):
+        return self.dict['offset']
+
+    @property
+    def limit(self):
+        return self.dict['limit']
+
+    @property
+    def total(self):
+        return self.dict['total']
+    
+    @property
+    def count(self):
+        return self.dict['count']

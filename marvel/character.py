@@ -6,8 +6,23 @@ __date__ = '02/07/14'
 import json
 from datetime import datetime
 
-from .core import MarvelObject
+from .core import MarvelObject, DataWrapper, DataContainer
 from .comic import Comic, ComicList
+
+class CharacterDataWrapper(DataWrapper):
+    @property
+    def data(self):
+        return CharacterDataContainer(self.marvel, self.dict['data'])
+
+class CharacterDataContainer(DataContainer):
+    @property
+    def results(self):
+        characters = []
+        for character in self.dict['results']:
+            characters.append(Character(self.marvel, character))
+            
+        return characters
+
 
 class Character(MarvelObject):
     """
