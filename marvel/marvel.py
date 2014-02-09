@@ -39,8 +39,8 @@ class Marvel(object):
         else:
             url += "?%s" % self._auth()
         
-        print "url:"
-        print url
+        #print "url:"
+        #print url
         return requests.get(url)
 
     def _params(self, params):
@@ -67,14 +67,14 @@ class Marvel(object):
         
         return CharacterDataWrapper(self, response)
         
-        #create Character from first item in 'results'
-        return Character( self,  response['data']['results'][0] )
-
     def get_characters(self, *args, **kwargs):
-        #characters/
-        characters = []
+        #characters/<?params>
+
         #pass url string and params string to _call
         response = json.loads(self._call(Character.resource_url(), self._params(kwargs)).text)
+        
+        return CharacterDataWrapper(self, response)
+        
         for character in response['data']['results']:
             characters.append(Character(self, character))
             
