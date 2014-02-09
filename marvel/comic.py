@@ -24,3 +24,43 @@ class Comic(MarvelObject):
     @property
     def description(self):
         return self.dict['description']
+
+class ComicList(MarvelObject):
+    """
+    ComicList object
+    """
+
+    @property
+    def available(self):
+        return self.dict['available']
+
+    @property
+    def returned(self):
+        return self.dict['returned']
+
+    @property
+    def collectionURI(self):
+        return self.dict['collectionURI']
+
+    @property
+    def items(self):
+        """
+        Returns List of ComicSummary objects
+        """
+        items = []
+        for index, item in enumerate(self.dict['items']):
+            items.append(ComicSummary(self.marvel, self.dict['items'][index]))
+        return items
+
+class ComicSummary(MarvelObject):
+    """
+    CommicSummary object
+    """
+
+    @property
+    def resourceURI(self):
+        return self.dict['resourceURI']
+
+    @property
+    def name(self):
+        return self.dict['name']

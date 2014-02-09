@@ -7,7 +7,7 @@ import json
 from datetime import datetime
 
 from .core import MarvelObject
-from .comic import Comic
+from .comic import Comic, ComicList
 
 class Character(MarvelObject):
     """
@@ -75,12 +75,12 @@ class Character(MarvelObject):
 
     @property
     def comics(self):
+        """
+        Returns ComicList object
+        """
+        return ComicList(self.marvel, self.dict['comics'])
         
-        comics = self.dict['comics']
-        print comics
-        #Maybe ComicSummary?
-        #Maybe ComicsList?
-        return comics
+        
         
     def get_comics(self):
         """
