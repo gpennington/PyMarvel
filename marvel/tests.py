@@ -41,6 +41,16 @@ class PyMarvelTestCase(unittest.TestCase):
         for c in cdw.data.results:
             print "%s - %s" % (c.id, c.name)
 
+    def test_get_characters_next(self):
+        cdw = self.m.get_characters(orderBy="name,-modified", limit="20", offset="15")
+        new_cdw = cdw.next()
+
+        assert new_cdw.code == 200
+
+        #poor test?
+        assert new_cdw.data.offset == cdw.data.offset + cdw.data.limit
+
+
     def test_get_comic(self):
         cdw = self.m.get_comic(41530)
 

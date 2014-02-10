@@ -75,7 +75,7 @@ class Marvel(object):
         """
         #pass url string and params string to _call
         response = json.loads(self._call(Character.resource_url(), self._params(kwargs)).text)
-        return CharacterDataWrapper(self, response)
+        return CharacterDataWrapper(self, response, kwargs)
 
     def get_comic(self, id):
         """
@@ -83,7 +83,7 @@ class Marvel(object):
         """
         url = "%s/%s" % (Comic.resource_url(), id)
         response = json.loads(self._call(url).text)
-        return ComicDataWrapper(self,response)
+        return ComicDataWrapper(self, response)
                 
     def get_comics(self, *args, **kwargs):
         """

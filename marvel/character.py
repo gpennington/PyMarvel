@@ -14,6 +14,23 @@ class CharacterDataWrapper(DataWrapper):
     def data(self):
         return CharacterDataContainer(self.marvel, self.dict['data'])
 
+    def next(self):
+        """
+        Returns new CharacterDataWrapper
+        TODO: Don't raise offset past count - limit
+        """
+        self.params['offset'] = str(int(self.params['offset']) + int(self.params['limit']))
+        return self.marvel.get_characters(self.marvel, (), **self.params)
+
+    def previous(self):
+        """
+        Returns new CharacterDataWrapper
+        TODO: Don't lower offset below 0
+        """
+        self.params['offset'] = str(int(self.params['offset']) - int(self.params['limit']))
+        return self.marvel.get_characters(self.marvel, (), **self.params)
+
+
 class CharacterDataContainer(DataContainer):
     @property
     def results(self):
@@ -46,7 +63,7 @@ class Character(MarvelObject):
 
     @property
     def modified(self):
-        """ Converts '2013-11-20T17:40:18-0500' to 'datetime' object """
+        """ Converts '2013-11-20T17:40:18-0500' format to 'datetime' object """
         #Hacked off %z timezone because reasons
         return datetime.strptime(self.dict['modified'][:-6], '%Y-%m-%dT%H:%M:%S')
 

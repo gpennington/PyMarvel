@@ -34,15 +34,17 @@ class DataWrapper(object):
     DataWrapper object
     """
 
-    def __init__(self, marvel, dict):
+    def __init__(self, marvel, dict, params=None):
         """
         init
         marvel - instance of Marvel class caller
         dict - dict of object, used to create MarvelObject
+        params - dict of query params passed to original call
         
         """
         self.marvel = marvel
         self.dict = dict
+        self.params = params
 
 
     @property
