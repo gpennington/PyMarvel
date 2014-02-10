@@ -11,6 +11,7 @@ import datetime
 import requests
 
 from .character import Character, CharacterDataWrapper
+from .comic import ComicDataWrapper, Comic
 from .comic import Comic
 
 DEFAULT_API_VERSION = 'v1'
@@ -61,31 +62,25 @@ class Marvel(object):
 
     #public methods
     def get_character(self, id):
-        #characters/:id/
+        """
+        characters/:id/
+        """
         url = "%s/%s" % (Character.resource_url(), id)
         response = json.loads(self._call(url).text)
-        
         return CharacterDataWrapper(self, response)
         
     def get_characters(self, *args, **kwargs):
-        #characters/<?params>
-
+        """
+        characters/<?params>
+        """
         #pass url string and params string to _call
         response = json.loads(self._call(Character.resource_url(), self._params(kwargs)).text)
-        
         return CharacterDataWrapper(self, response)
-        
-        for character in response['data']['results']:
-            characters.append(Character(self, character))
-            
-        return characters
-
-
 
     def get_comic(self, id):
-        #comics/:id/
+        """
+        comics/:id/
+        """
         url = "%s/%s" % (Comic.resource_url(), id)
         response = json.loads(self._call(url).text)
-
-        #create Comic from first item in 'results'
-        return Comic( self,  response['data']['results'][0] )
+        return ComicDataWrapper(self,response)

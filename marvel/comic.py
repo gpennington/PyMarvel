@@ -3,7 +3,20 @@
 __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
-from .core import MarvelObject
+from .core import MarvelObject, DataWrapper, DataContainer
+
+class ComicDataWrapper(DataWrapper):
+    @property
+    def data(self):
+        return ComicDataContainer(self.marvel, self.dict['data'])
+
+class ComicDataContainer(DataContainer):
+    @property
+    def results(self):
+        comics = []
+        for comic in self.dict['results']:
+            comics.append(Comic(self.marvel, comic))
+        return comics
 
 class Comic(MarvelObject):
     """
