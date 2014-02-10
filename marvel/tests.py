@@ -22,7 +22,6 @@ class PyMarvelTestCase(unittest.TestCase):
         assert cdw.status == 'Ok'
         assert cdw.data.results[0].name == "Wolverine"
 
-
     def test_get_characters(self):
         cdw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
 
