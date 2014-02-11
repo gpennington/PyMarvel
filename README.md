@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gpennington/PyMarvel.png?branch=master)](https://travis-ci.org/gpennington/PyMarvel)
+
 PyMarvel
 ========
 
