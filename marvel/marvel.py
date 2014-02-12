@@ -17,11 +17,24 @@ from .comic import Comic
 DEFAULT_API_VERSION = 'v1'
 
 class Marvel(object):
-    """
-    main Marvel class
+    """Marvel API class
+
+    This class provides methods to interface with the Marvel API
+
+    >>> m = Marvel("acb123....", "efg456...")
+
     """
 
     def __init__(self, public_key, private_key):
+        """
+        Args:
+           public_key (str): Public api key available from http://developer.marvel.com
+           private (str): Private api key available from http://developer.marvel.com
+
+        Kwargs:
+           bar (str): Really, same as foo.
+
+        """
         self.public_key = public_key
         self.private_key = private_key
         
@@ -62,25 +75,57 @@ class Marvel(object):
 
     #public methods
     def get_character(self, id):
-        """
-        characters/:id/
+        """Fetches a single character by id.
+        
+        Returns a CharacterDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> cdw = m.get_character(1009718)
+        >>> print cdw.data.count
+        1
+        >>> print cdw.data.results[0].name
+        Wolverine
+
         """
         url = "%s/%s" % (Character.resource_url(), id)
         response = json.loads(self._call(url).text)
         return CharacterDataWrapper(self, response)
         
     def get_characters(self, *args, **kwargs):
-        """
-        characters/<?params>
+        """Fetches lists of comic characters with optional filters.
+        
+        Returns a CharacterDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> cdw = m.get_characters(orderBy="name,-modified", limit="5", offset="15")
+        >>> print cdw.data.count
+        1401
+        >>> for result in cdw.data.results:
+        ...     print result.name
+        Aginar
+        Air-Walker (Gabriel Lan)
+        Ajak
+        Ajaxis
+        Akemi
+        
         """
         #pass url string and params string to _call
         response = json.loads(self._call(Character.resource_url(), self._params(kwargs)).text)
         return CharacterDataWrapper(self, response, kwargs)
 
     def get_comic(self, id):
+        """Fetches a single comic by id.
+        
+        Returns a ComicDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> cdw = m.get_comic(1009718)
+        >>> print cdw.data.count
+        1
+        >>> print cdw.data.results[0].name
+        Some Comic
         """
-        comics/:id/
-        """
+        
         url = "%s/%s" % (Comic.resource_url(), id)
         response = json.loads(self._call(url).text)
         return ComicDataWrapper(self, response)
