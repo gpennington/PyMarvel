@@ -14,4 +14,4 @@ Character Module
 .. autoclass:: marvel.character.CharacterDataContainer
 
 .. autoclass:: marvel.character.Character
-    :members: get_comics
+    :members:

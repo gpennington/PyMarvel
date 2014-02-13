@@ -90,3 +90,33 @@ class DataContainer(object):
     @property
     def count(self):
         return self.dict['count']
+        
+class List(MarvelObject):
+    """
+    List object
+    """
+
+    @property
+    def available(self):
+        return self.dict['available']
+
+    @property
+    def returned(self):
+        return self.dict['returned']
+
+    @property
+    def collectionURI(self):
+        return self.dict['collectionURI']
+        
+class Summary(MarvelObject):
+    """
+    Summary object
+    """
+
+    @property
+    def resourceURI(self):
+        return self.dict['resourceURI']
+
+    @property
+    def name(self):
+        return self.dict['name']

@@ -22,6 +22,16 @@ class PyMarvelTestCase(unittest.TestCase):
         assert cdw.status == 'Ok'
         assert cdw.data.results[0].name == "Wolverine"
 
+    def test_get_character_get_comics(self):
+        comic_dw = self.m.get_character(1009718).data.results[0].get_comics()
+
+        assert comic_dw.code == 200
+        assert comic_dw.status == 'Ok'
+        
+        print "Wolvy comics: \n"
+        for c in comic_dw.data.results:
+            print "%s - %s" % (c.id, c.title)
+
     def test_get_characters(self):
         cdw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
 

@@ -6,8 +6,8 @@ __date__ = '02/07/14'
 import json
 from datetime import datetime
 
-from .core import MarvelObject, DataWrapper, DataContainer
-from .comic import Comic, ComicList
+from .core import MarvelObject, DataWrapper, DataContainer, Summary
+from .comic import Comic, ComicDataWrapper
 
 class CharacterDataWrapper(DataWrapper):
     @property
@@ -107,6 +107,7 @@ class Character(MarvelObject):
 
     @property
     def comics(self):
+        from .comic import ComicList
         """
         Returns ComicList object
         """
@@ -114,12 +115,49 @@ class Character(MarvelObject):
         
         
         
-    def get_comics(self):
+    def get_comics(self, *args, **kwargs):
         """
-        Returns list of Comic objects
+        Returns a full ComicDataWrapper object this character.
+        
+        :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
-        response = json.loads(self.marvel._call("%s/%s/%s" % (self._resource_url, self.id, Comic.resource_url())).text)
-        comics = []
-        for comic in response['data']['results']:
-            comics.append(Comic(self.marvel, comic))
-        return comics
+        url = "%s/%s/%s" % (Character.resource_url(), self.id, Comic.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return ComicDataWrapper(self, response)
+        
+
+class CharacterList(MarvelObject):
+    """
+    CharacterList object
+    """
+
+    @property
+    def available(self):
+        return self.dict['available']
+
+    @property
+    def returned(self):
+        return self.dict['returned']
+
+    @property
+    def collectionURI(self):
+        return self.dict['collectionURI']
+
+    @property
+    def items(self):
+        """
+        Returns List of CharacterSummary objects
+        """
+        items = []
+        for index, item in enumerate(self.dict['items']):
+            items.append(CharacterSummary(self.marvel, self.dict['items'][index]))
+        return items
+
+class CharacterSummary(Summary):
+    """
+    CharacterSummary object
+    """
+        
+    @property
+    def role(self):
+        return self.dict['role']
