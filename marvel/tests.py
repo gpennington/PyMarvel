@@ -22,15 +22,29 @@ class PyMarvelTestCase(unittest.TestCase):
         assert cdw.status == 'Ok'
         assert cdw.data.results[0].name == "Wolverine"
 
+        print "\nGet Character: \n"
+        print cdw.data.results[0].name
+
     def test_get_character_get_comics(self):
-        comic_dw = self.m.get_character(1009718).data.results[0].get_comics()
+        character = self.m.get_character(1009718).data.results[0]
+        comic_dw = character.get_comics()
 
         assert comic_dw.code == 200
         assert comic_dw.status == 'Ok'
         
-        print "Wolvy comics: \n"
+        print "\nWolverine comics: \n"
         for c in comic_dw.data.results:
             print "%s - %s" % (c.id, c.title)
+
+        comic_dw_params = character.get_comics(format="comic", formatType="comic", hasDigitalIssue=True, orderBy="title", limit=10, offset=30)
+
+        assert comic_dw_params.code == 200
+        assert comic_dw_params.status == 'Ok'
+        
+        print "\nWolverine comics with parameters: \n"
+        for c in comic_dw_params.data.results:
+            print "%s - %s" % (c.id, c.title)
+
 
     def test_get_characters(self):
         cdw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
@@ -47,6 +61,7 @@ class PyMarvelTestCase(unittest.TestCase):
         assert type(cdw.data) is CharacterDataContainer
         assert type(cdw.data.results) is list
 
+        print "\nGet Characters: \n"
         for c in cdw.data.results:
             print "%s - %s" % (c.id, c.name)
 
