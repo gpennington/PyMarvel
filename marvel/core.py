@@ -110,7 +110,7 @@ class List(MarvelObject):
         
 class Summary(MarvelObject):
     """
-    Summary object
+    Summary
     """
 
     @property
@@ -120,3 +120,24 @@ class Summary(MarvelObject):
     @property
     def name(self):
         return self.dict['name']
+        
+class TextObject(MarvelObject):
+    """
+    TextObject
+
+    type (string, optional): The canonical type of the text object (e.g. solicit text, preview text, etc.).,
+    language (string, optional): The IETF language tag denoting the language the text object is written in.,
+    text (string, optional): The text.
+    """
+
+    @property
+    def type(self):
+        return self.dict['type']
+
+    @property
+    def language(self):
+        return self.dict['language']
+
+    @property
+    def text(self):
+        return self.dict['text']

@@ -3,7 +3,7 @@
 __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
-from .core import MarvelObject, DataWrapper, DataContainer, List, Summary
+from .core import MarvelObject, DataWrapper, DataContainer, List, Summary, TextObject
  
 
 class ComicDataWrapper(DataWrapper):
@@ -33,7 +33,7 @@ class Comic(MarvelObject):
 
     @property
     def digitalId(self):
-        return self.dict['digitalId']
+        return int(self.dict['digitalId'])
 
     @property
     def title(self):
@@ -41,7 +41,7 @@ class Comic(MarvelObject):
 
     @property
     def issueNumber(self):
-        return self.dict['issueNumber']
+        return float(self.dict['issueNumber'])
 
     @property
     def variantDescription(self):
@@ -94,8 +94,13 @@ class Comic(MarvelObject):
 
     @property
     def textObjects(self):
-        """ todo TextObject class?"""
-        return self.dict['textObjects']
+        """
+        :returns: list -- List of TextObjects
+        """
+        text_objects = []
+        for obj in self.dict['textObjects']:
+            text_objects.append(TextObject(self.marvel, obj))
+        return text_objects
 
     @property
     def resourceURI(self):
