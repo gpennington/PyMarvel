@@ -3,7 +3,7 @@ import os
 import unittest
 
 from .marvel import Marvel
-from .core import TextObject
+from .core import TextObject, Image
 from .character import CharacterDataWrapper, CharacterDataContainer, Character
 from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary, ComicDate, ComicPrice
 from .config import *
@@ -100,6 +100,9 @@ class PyMarvelTestCase(unittest.TestCase):
         #prices/dates
         assert isinstance(cdw.data.results[0].prices[0], ComicPrice)
         assert isinstance(cdw.data.results[0].dates[0], ComicDate)
+        #images
+        assert isinstance(cdw.data.results[0].thumbnail, Image)
+
         
     def test_get_comics(self):
         cdw = self.m.get_comics(orderBy="issueNumber,-modified", limit="10", offset="15")

@@ -147,3 +147,21 @@ class TextObject(MarvelObject):
     @property
     def text(self):
         return self.dict['text']
+        
+
+class Image(MarvelObject):
+    """
+    Image
+    """
+
+    @property
+    def path(self):
+        return self.dict['path']
+
+    @property
+    def extension(self):
+        return self.dict['extension']
+
+    def __repr__(self):
+        return "%s.%s" % (self.path, self.extension)
+

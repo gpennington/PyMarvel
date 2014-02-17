@@ -3,7 +3,7 @@
 __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
-from .core import MarvelObject, DataWrapper, DataContainer, List, Summary, TextObject
+from .core import MarvelObject, DataWrapper, DataContainer, List, Summary, TextObject, Image
  
 
 class ComicDataWrapper(DataWrapper):
@@ -149,7 +149,7 @@ class Comic(MarvelObject):
 
     @property
     def thumbnail(self):
-        return self.dict['thumbnail']
+        return Image(self.marvel, self.dict['thumbnail'])
 
     @property
     def images(self):
