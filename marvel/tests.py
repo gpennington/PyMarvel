@@ -102,6 +102,7 @@ class PyMarvelTestCase(unittest.TestCase):
         assert isinstance(cdw.data.results[0].dates[0], ComicDate)
         #images
         assert isinstance(cdw.data.results[0].thumbnail, Image)
+        assert isinstance(cdw.data.results[0].images[0], Image)
 
         
     def test_get_comics(self):

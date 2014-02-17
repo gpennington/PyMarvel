@@ -14,10 +14,7 @@ class ComicDataWrapper(DataWrapper):
 class ComicDataContainer(DataContainer):
     @property
     def results(self):
-        comics = []
-        for comic in self.dict['results']:
-            comics.append(Comic(self.marvel, comic))
-        return comics
+        return self.list_to_instance_list(self.dict['results'], Comic)
 
 class Comic(MarvelObject):
     """
@@ -95,10 +92,7 @@ class Comic(MarvelObject):
         """
         :returns: list -- List of TextObjects
         """
-        text_objects = []
-        for obj in self.dict['textObjects']:
-            text_objects.append(TextObject(self.marvel, obj))
-        return text_objects
+        return self.list_to_instance_list(self.dict['textObjects'], TextObject)
 
     @property
     def resourceURI(self):
@@ -117,35 +111,29 @@ class Comic(MarvelObject):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_comic_summary(self.dict['variants'])
+        return self.list_to_instance_list(self.dict['variants'], ComicSummary)
                     
     @property
     def collections(self):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_comic_summary(self.dict['collections'])
+        return self.list_to_instance_list(self.dict['collections'], ComicSummary)
 
     @property
     def collectedIssues(self):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_comic_summary(self.dict['collectedIssues'])
+        return self.list_to_instance_list(self.dict['collectedIssues'], ComicSummary)
 
     @property
     def dates(self):
-        dates = []
-        for date in self.dict['dates']:
-            dates.append(ComicDate(self.marvel, date))
-        return dates
+        return self.list_to_instance_list(self.dict['dates'], ComicDate)
 
     @property
     def prices(self):
-        prices = []
-        for price in self.dict['prices']:
-            prices.append(ComicPrice(self.marvel, price))
-        return prices
+        return self.list_to_instance_list(self.dict['prices'], ComicPrice)
 
     @property
     def thumbnail(self):
@@ -153,7 +141,7 @@ class Comic(MarvelObject):
 
     @property
     def images(self):
-        return self.dict['images']
+        return self.list_to_instance_list(self.dict['images'], Image)
 
     @property
     def creators(self):
@@ -170,14 +158,6 @@ class Comic(MarvelObject):
     @property
     def events(self):
         return self.dict['events']
-        
-        
-    def list_to_comic_summary(self, _list):
-        items = []
-        for item in _list:
-            items.append(ComicSummary(self.marvel, item))
-        return items
-        
         
 
 """
@@ -222,10 +202,7 @@ class ComicList(List):
         """
         Returns List of ComicSummary objects
         """
-        items = []
-        for index, item in enumerate(self.dict['items']):
-            items.append(ComicSummary(self.marvel, self.dict['items'][index]))
-        return items
+        return self.list_to_instance_list(self.dict['items'], ComicSummary)
 
 class ComicSummary(Summary):
     """

@@ -34,11 +34,7 @@ class CharacterDataWrapper(DataWrapper):
 class CharacterDataContainer(DataContainer):
     @property
     def results(self):
-        characters = []
-        for character in self.dict['results']:
-            characters.append(Character(self.marvel, character))
-            
-        return characters
+        return self.list_to_instance_list(self.dict['results'], Character)
 
 
 class Character(MarvelObject):
@@ -146,10 +142,7 @@ class CharacterList(MarvelObject):
         """
         Returns List of CharacterSummary objects
         """
-        items = []
-        for index, item in enumerate(self.dict['items']):
-            items.append(CharacterSummary(self.marvel, self.dict['items'][index]))
-        return items
+        return self.list_to_instance_list(self.dict['items'], CharacterSummary)
 
 class CharacterSummary(Summary):
     """

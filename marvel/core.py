@@ -28,8 +28,14 @@ class MarvelObject(object):
     @classmethod
     def resource_url(cls):
         return cls._resource_url
-
-class DataWrapper(object):
+        
+    def list_to_instance_list(self, _list, _Class):
+        items = []
+        for item in _list:
+            items.append(_Class(self.marvel, item))
+        return items
+        
+class DataWrapper(MarvelObject):
     """
     DataWrapper object
     """
@@ -59,7 +65,7 @@ class DataWrapper(object):
     def etag(self):
         return self.dict['etag']
 
-class DataContainer(object):
+class DataContainer(MarvelObject):
     """
     DataContainer object
     """
