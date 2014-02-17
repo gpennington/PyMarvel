@@ -63,9 +63,7 @@ class Character(MarvelObject):
 
     @property
     def modified(self):
-        """ Converts '2013-11-20T17:40:18-0500' format to 'datetime' object """
-        #Hacked off %z timezone because reasons
-        return datetime.strptime(self.dict['modified'][:-6], '%Y-%m-%dT%H:%M:%S')
+        return str_to_datetime(self.dict['modified'])
 
     @property
     def modified_raw(self):

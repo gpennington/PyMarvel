@@ -97,8 +97,10 @@ class PyMarvelTestCase(unittest.TestCase):
         assert isinstance(cdw.data.results[0].textObjects[0], TextObject)
         #collections
         assert isinstance(cdw.data.results[0].collections[0], ComicSummary)
-
-
+        #prices/dates
+        assert isinstance(cdw.data.results[0].prices[0], ComicPrice)
+        assert isinstance(cdw.data.results[0].dates[0], ComicDate)
+        
     def test_get_comics(self):
         cdw = self.m.get_comics(orderBy="issueNumber,-modified", limit="10", offset="15")
 

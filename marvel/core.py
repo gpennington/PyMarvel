@@ -91,6 +91,12 @@ class DataContainer(object):
     def count(self):
         return self.dict['count']
         
+    def str_to_datetime(self, _str):
+        """ Converts '2013-11-20T17:40:18-0500' format to 'datetime' object """
+        #Hacked off %z timezone because reasons
+        return datetime.strptime(_str[:-6], '%Y-%m-%dT%H:%M:%S')
+        
+        
 class List(MarvelObject):
     """
     List object

@@ -56,9 +56,7 @@ class Comic(MarvelObject):
 
     @property
     def modified(self):
-        """ Converts '2013-11-20T17:40:18-0500' format to 'datetime' object """
-        #Hacked off %z timezone because reasons
-        return datetime.strptime(self.dict['modified'][:-6], '%Y-%m-%dT%H:%M:%S')
+        return str_to_datetime(self.dict['modified'])
 
     @property
     def modified_raw(self):
@@ -137,11 +135,17 @@ class Comic(MarvelObject):
 
     @property
     def dates(self):
-        return self.dict['dates']
+        dates = []
+        for date in self.dict['dates']:
+            dates.append(ComicDate(self.marvel, date))
+        return dates
 
     @property
     def prices(self):
-        return self.dict['prices']
+        prices = []
+        for price in self.dict['prices']:
+            prices.append(ComicPrice(self.marvel, price))
+        return prices
 
     @property
     def thumbnail(self):
@@ -227,3 +231,27 @@ class ComicSummary(Summary):
     """
     CommicSummary object
     """
+
+class ComicDate(MarvelObject):
+    """
+    ComicDate object
+    """
+    @property
+    def type(self):
+        return self.dict['type']
+
+    @property
+    def date(self):
+        return self.str_to_datetime(self.dict['date'])
+
+class ComicPrice(MarvelObject):
+    """
+    ComicPrice object
+    """
+    @property
+    def type(self):
+        return self.dict['type']
+
+    @property
+    def price(self):
+        return float(self.dict['price'])
