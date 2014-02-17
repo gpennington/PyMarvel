@@ -5,7 +5,7 @@ import unittest
 from .marvel import Marvel
 from .core import TextObject
 from .character import CharacterDataWrapper, CharacterDataContainer, Character
-from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary
+from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary, ComicDate, ComicPrice
 from .config import *
 
 class PyMarvelTestCase(unittest.TestCase):
