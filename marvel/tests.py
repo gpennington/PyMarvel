@@ -3,8 +3,9 @@ import os
 import unittest
 
 from .marvel import Marvel
+from .core import TextObject
 from .character import CharacterDataWrapper, CharacterDataContainer, Character
-from .comic import ComicDataWrapper, ComicDataContainer, Comic
+from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary
 from .config import *
 
 class PyMarvelTestCase(unittest.TestCase):
@@ -76,7 +77,8 @@ class PyMarvelTestCase(unittest.TestCase):
 
 
     def test_get_comic(self):
-        cdw = self.m.get_comic(41530)
+        #Need a comic with everything
+        cdw = self.m.get_comic(531)
 
         assert cdw.code == 200
         assert cdw.status == 'Ok'
@@ -88,7 +90,15 @@ class PyMarvelTestCase(unittest.TestCase):
         assert type(cdw) is ComicDataWrapper
         assert type(cdw.data) is ComicDataContainer
         assert type(cdw.data.results) is list
-        
+
+        #properties
+        #textObjects
+        assert len(cdw.data.results[0].textObjects) > 0
+        assert isinstance(cdw.data.results[0].textObjects[0], TextObject)
+        #collections
+        assert isinstance(cdw.data.results[0].collections[0], ComicSummary)
+
+
     def test_get_comics(self):
         cdw = self.m.get_comics(orderBy="issueNumber,-modified", limit="10", offset="15")
 

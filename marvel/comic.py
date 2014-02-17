@@ -116,15 +116,24 @@ class Comic(MarvelObject):
 
     @property
     def variants(self):
-        return self.dict['variants']
+        """
+        Returns List of ComicSummary objects
+        """
+        return self.list_to_comic_summary(self.dict['variants'])
                     
     @property
     def collections(self):
-        return self.dict['collections']
+        """
+        Returns List of ComicSummary objects
+        """
+        return self.list_to_comic_summary(self.dict['collections'])
 
     @property
     def collectedIssues(self):
-        return self.dict['collectedIssues']
+        """
+        Returns List of ComicSummary objects
+        """
+        return self.list_to_comic_summary(self.dict['collectedIssues'])
 
     @property
     def dates(self):
@@ -157,6 +166,15 @@ class Comic(MarvelObject):
     @property
     def events(self):
         return self.dict['events']
+        
+        
+    def list_to_comic_summary(self, _list):
+        items = []
+        for item in _list:
+            items.append(ComicSummary(self.marvel, item))
+        return items
+        
+        
 
 """
 id (int, optional): The unique ID of the comic resource.,
