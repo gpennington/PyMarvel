@@ -6,7 +6,7 @@ __date__ = '02/07/14'
 import json
 from datetime import datetime
 
-from .core import MarvelObject, DataWrapper, DataContainer, Summary
+from .core import MarvelObject, DataWrapper, DataContainer, Summary, List
 from .comic import Comic, ComicDataWrapper
 
 class CharacterDataWrapper(DataWrapper):
@@ -113,6 +113,8 @@ class Character(MarvelObject):
         """
         Returns a full ComicDataWrapper object this character.
         
+        /characters/{characterId}/comics
+        
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         url = "%s/%s/%s" % (Character.resource_url(), self.id, Comic.resource_url())
@@ -120,23 +122,10 @@ class Character(MarvelObject):
         return ComicDataWrapper(self, response)
         
 
-class CharacterList(MarvelObject):
+class CharacterList(List):
     """
     CharacterList object
     """
-
-    @property
-    def available(self):
-        return self.dict['available']
-
-    @property
-    def returned(self):
-        return self.dict['returned']
-
-    @property
-    def collectionURI(self):
-        return self.dict['collectionURI']
-
     @property
     def items(self):
         """

@@ -4,7 +4,10 @@ import unittest
 
 from .marvel import Marvel
 from .core import TextObject, Image
-from .character import CharacterDataWrapper, CharacterDataContainer, Character
+from .creator import CreatorList, CreatorSummary
+from .character import CharacterDataWrapper, CharacterDataContainer, Character, CharacterList, CharacterSummary
+from .story import StoryList, StorySummary
+from .event import EventList, EventSummary
 from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary, ComicDate, ComicPrice
 from .config import *
 
@@ -103,6 +106,17 @@ class PyMarvelTestCase(unittest.TestCase):
         #images
         assert isinstance(cdw.data.results[0].thumbnail, Image)
         assert isinstance(cdw.data.results[0].images[0], Image)
+        #lists
+        assert isinstance(cdw.data.results[0].creators, CreatorList)
+        assert isinstance(cdw.data.results[0].creators.items[0], CreatorSummary)
+        assert isinstance(cdw.data.results[0].characters, CharacterList)
+        assert isinstance(cdw.data.results[0].characters.items[0], CharacterSummary)
+        assert isinstance(cdw.data.results[0].stories, StoryList)
+        assert isinstance(cdw.data.results[0].stories.items[0], StorySummary)
+        assert isinstance(cdw.data.results[0].events, EventList)
+        assert isinstance(cdw.data.results[0].events.items[0], EventSummary)
+
+
 
         
     def test_get_comics(self):
