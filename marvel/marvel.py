@@ -12,7 +12,7 @@ import requests
 
 from .character import Character, CharacterDataWrapper
 from .comic import ComicDataWrapper, Comic
-from .comic import Comic
+from .creator import CreatorataWrapper, Creator
 
 DEFAULT_API_VERSION = 'v1'
 
@@ -137,3 +137,23 @@ class Marvel(object):
         #pass url string and params string to _call
         response = json.loads(self._call(Comic.resource_url(), self._params(kwargs)).text)
         return ComicDataWrapper(self, response)
+        
+        
+    def get_creator(self, id):
+        """Fetches a single creator by id.
+
+        get /v1/public/creators/{creatorId}
+
+        Returns a CreatorDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> cdw = m.get_creator(30)
+        >>> print cdw.data.count
+        1
+        >>> print cdw.data.results.fullName
+        Stan Lee
+        """
+
+        url = "%s/%s" % (Creator.resource_url(), id)
+        response = json.loads(self._call(url).text)
+        return CreatorDataWrapper(self, response)

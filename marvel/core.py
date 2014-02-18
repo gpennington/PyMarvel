@@ -96,6 +96,15 @@ class DataContainer(MarvelObject):
     @property
     def count(self):
         return self.dict['count']
+
+    @property
+    def result(self):
+        """
+        Returns the first item in the results list.
+        Useful for methods that should return only one results.
+        """
+        return self.dict['results'][0]
+
         
     def str_to_datetime(self, _str):
         """ Converts '2013-11-20T17:40:18-0500' format to 'datetime' object """

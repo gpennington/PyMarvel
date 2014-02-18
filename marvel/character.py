@@ -4,10 +4,8 @@ __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
 import json
-from datetime import datetime
 
 from .core import MarvelObject, DataWrapper, DataContainer, Summary, List
-from .comic import Comic, ComicDataWrapper
 
 class CharacterDataWrapper(DataWrapper):
     @property
@@ -92,13 +90,6 @@ class Character(MarvelObject):
         return "%s.%s" % (self.dict['thumbnail']['path'], self.dict['thumbnail']['extension'] )
 
 
-    """
-    comics (ComicList, optional): A resource list containing comics which feature this character.,
-    stories (StoryList, optional): A resource list of stories in which this character appears.,
-    events (EventList, optional): A resource list of events in which this character appears.,
-    series (SeriesList, optional): A resource list of series in which this character appears.
-    """
-
     @property
     def comics(self):
         from .comic import ComicList
@@ -117,6 +108,7 @@ class Character(MarvelObject):
         
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
+        from .comic import Comic, ComicDataWrapper
         url = "%s/%s/%s" % (Character.resource_url(), self.id, Comic.resource_url())
         response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
         return ComicDataWrapper(self, response)
