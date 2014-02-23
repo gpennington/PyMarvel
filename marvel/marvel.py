@@ -12,7 +12,7 @@ import requests
 
 from .character import Character, CharacterDataWrapper
 from .comic import ComicDataWrapper, Comic
-from .creator import CreatorataWrapper, Creator
+from .creator import CreatorDataWrapper, Creator
 
 DEFAULT_API_VERSION = 'v1'
 

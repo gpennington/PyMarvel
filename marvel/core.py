@@ -103,7 +103,7 @@ class DataContainer(MarvelObject):
         Returns the first item in the results list.
         Useful for methods that should return only one results.
         """
-        return self.dict['results'][0]
+        return self.results[0]
 
         
     def str_to_datetime(self, _str):

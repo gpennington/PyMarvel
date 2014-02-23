@@ -113,7 +113,7 @@ class PyMarvelTestCase(unittest.TestCase):
         assert isinstance(cdw.data.results[0].characters.items[0], CharacterSummary)
         assert isinstance(cdw.data.results[0].stories, StoryList)
         assert isinstance(cdw.data.results[0].stories.items[0], StorySummary)
-        #Need a test case with an Event
+        #TODO: Need a test case with an Event
         #assert isinstance(cdw.data.results[0].events, EventList)
         #assert isinstance(cdw.data.results[0].events.items[0], EventSummary)
 
@@ -145,8 +145,8 @@ class PyMarvelTestCase(unittest.TestCase):
 
         assert cdw.code == 200
         assert cdw.status == 'Ok'
-        assert cdw.data.results.firstName == "Stan"
-        assert cdw.data.results.firstName == "Lee"
+        assert cdw.data.result.firstName == "Stan"
+        assert cdw.data.result.lastName == "Lee"
 
 
 
