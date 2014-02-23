@@ -5,3 +5,5 @@ docs/_build
 docs/_static
 docs/_templates
 notes.txt
+reports/coverage_html/
+.coverage
