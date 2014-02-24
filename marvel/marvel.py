@@ -150,10 +150,29 @@ class Marvel(object):
         >>> cdw = m.get_creator(30)
         >>> print cdw.data.count
         1
-        >>> print cdw.data.results.fullName
+        >>> print cdw.data.result.fullName
         Stan Lee
         """
 
         url = "%s/%s" % (Creator.resource_url(), id)
         response = json.loads(self._call(url).text)
+        return CreatorDataWrapper(self, response)
+
+        
+    def get_creators(self, *args, **kwargs):
+        """Fetches lists of creators.
+        
+        get /v1/public/creators/{creatorId}
+        
+        Returns a CreatorDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> cdw = m.get_creators(lastName="Lee", orderBy="firstName,-modified", limit="5", offset="15")
+        >>> print cdw.data.total
+        25
+        >>> print cdw.data.results[0].fullName
+        Alvin Lee
+        """
+        
+        response = json.loads(self._call(Creator.resource_url(), self._params(kwargs)).text)
         return CreatorDataWrapper(self, response)

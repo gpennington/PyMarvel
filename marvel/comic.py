@@ -163,6 +163,34 @@ class Comic(MarvelObject):
         from .event import EventList
         return EventList(self.marvel, self.dict['events'])
         
+        
+    def get_creators(self, *args, **kwargs):
+        """
+        Returns a full CreatorDataWrapper object for this character.
+
+        /comics/{comicId}/creators
+
+        :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .creator import Creator, CreatorDataWrapper
+        url = "%s/%s/%s" % (Comic.resource_url(), self.id, Creator.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return CreatorDataWrapper(self, response)
+
+    def get_characters(self, *args, **kwargs):
+        """
+        Returns a full CharacterDataWrapper object for this character.
+
+        /comics/{comicId}/characters
+
+        :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .character import Character, CharacterDataWrapper
+        url = "%s/%s/%s" % (Comic.resource_url(), self.id, Character.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return CharacterDataWrapper(self, response)
+
+
 
 class ComicList(List):
     """

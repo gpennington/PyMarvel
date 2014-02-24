@@ -138,6 +138,7 @@ class Creator(MarvelObject):
         
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
+        from .comic import Comic, ComicDataWrapper
         url = "%s/%s/%s" % (Creator.resource_url(), self.id, Comic.resource_url())
         response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
         return ComicDataWrapper(self, response)

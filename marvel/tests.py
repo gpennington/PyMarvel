@@ -30,7 +30,7 @@ class PyMarvelTestCase(unittest.TestCase):
         print cdw.data.results[0].name
 
     def test_get_character_get_comics(self):
-        character = self.m.get_character(1009718).data.results[0]
+        character = self.m.get_character(1009718).data.result
         comic_dw = character.get_comics()
 
         assert comic_dw.code == 200
@@ -147,6 +147,28 @@ class PyMarvelTestCase(unittest.TestCase):
         assert cdw.status == 'Ok'
         assert cdw.data.result.firstName == "Stan"
         assert cdw.data.result.lastName == "Lee"
+
+    def test_get_creator_get_comics(self):
+        #Grab Stan the Man
+        theman = self.m.get_creator(30).data.result
+        
+        comic_dw = theman.get_comics()
+
+        assert comic_dw.code == 200
+        assert comic_dw.status == 'Ok'
+        
+        print "\nCreator.get_comics(): \n"
+        for c in comic_dw.data.results:
+            print "%s - %s" % (c.id, c.title)
+
+        comic_dw_params = theman.get_comics(format="comic", formatType="comic", hasDigitalIssue=True, orderBy="title", limit=10, offset=30)
+
+        assert comic_dw_params.code == 200
+        assert comic_dw_params.status == 'Ok'
+        
+        print "\nCreator.get_comics(params): \n"
+        for c in comic_dw_params.data.results:
+            print "%s - %s" % (c.id, c.title)
 
 
 
