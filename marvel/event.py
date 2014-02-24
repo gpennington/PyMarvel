@@ -22,4 +22,158 @@ class EventSummary(Summary):
     """
     EventSummary object
     """
-    
+
+class Event(MarvelObject):
+    """
+    Event object
+    Takes a dict of character attrs
+    """
+    _resource_url = 'events'
+
+
+    @property
+    def id(self):
+        return self.dict['id']
+
+    @property
+    def title(self):
+        return self.dict['title']
+
+    @property
+    def description(self):
+        """
+        :returns:  str -- The preferred description of the comic.
+        """
+        return self.dict['description']
+
+    @property
+    def resourceURI(self):
+        return self.dict['resourceURI']
+
+    @property
+    def urls(self):
+        return self.dict['urls']
+
+    @property
+    def modified(self):
+        return str_to_datetime(self.dict['modified'])
+
+    @property
+    def modified_raw(self):
+        return self.dict['modified']
+
+    @property
+    def start(self):
+        return str_to_datetime(self.dict['start'])
+
+    @property
+    def start_raw(self):
+        return self.dict['start']
+
+    @property
+    def end(self):
+        return str_to_datetime(self.dict['end'])
+
+    @property
+    def end_raw(self):
+        return self.dict['end']
+
+    @property
+    def thumbnail(self):
+        return Image(self.marvel, self.dict['thumbnail'])
+
+    @property
+    def comics(self):
+        from .comic import ComicList
+        return ComicList(self.marvel, self.dict['comics'])
+
+    @property
+    def creators(self):
+        from .creator import CreatorList
+        return CreatorList(self.marvel, self.dict['creators'])
+
+    @property
+    def characters(self):
+        from .character import CharacterList
+        return CharacterList(self.marvel, self.dict['characters'])
+
+    @property
+    def stories(self):
+        from .story import StoryList
+        return StoryList(self.marvel, self.dict['stories'])
+
+    @property
+    def series(self):
+        #TODO Make series.py
+        return self.dict['stories']
+
+    @property
+    def next(self):
+        return EventSummary(self.marvel, self.dict['next'])
+
+    @property
+    def previoius(self):
+        return EventSummary(self.marvel, self.dict['previous'])
+
+
+    def get_creators(self, *args, **kwargs):
+        """
+        Returns a full CreatorDataWrapper object for this character.
+
+        /events/{comicId}/creators
+
+        :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .creator import Creator, CreatorDataWrapper
+        url = "%s/%s/%s" % (Event.resource_url(), self.id, Creator.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return CreatorDataWrapper(self, response)
+
+    def get_characters(self, *args, **kwargs):
+        """
+        Returns a full CharacterDataWrapper object for this character.
+
+        /events/{comicId}/characters
+
+        :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .character import Character, CharacterDataWrapper
+        url = "%s/%s/%s" % (Event.resource_url(), self.id, Character.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return CharacterDataWrapper(self, response)
+
+    def get_comics(self, *args, **kwargs):
+        """
+        Returns a full ComicDataWrapper object this character.
+
+        /events/{characterId}/comics
+
+        :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .comic import Comic, ComicDataWrapper
+        url = "%s/%s/%s" % (Event.resource_url(), self.id, Comic.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return ComicDataWrapper(self, response)
+
+
+
+"""
+    Event {
+    id (int, optional): The unique ID of the event resource.,
+    title (string, optional): The title of the event.,
+    description (string, optional): A description of the event.,
+    resourceURI (string, optional): The canonical URL identifier for this resource.,
+    urls (Array[Url], optional): A set of public web site URLs for the event.,
+    modified (Date, optional): The date the resource was most recently modified.,
+    start (Date, optional): The date of publication of the first issue in this event.,
+    end (Date, optional): The date of publication of the last issue in this event.,
+    thumbnail (Image, optional): The representative image for this event.,
+    comics (ComicList, optional): A resource list containing the comics in this event.,
+    stories (StoryList, optional): A resource list containing the stories in this event.,
+    series (SeriesList, optional): A resource list containing the series in this event.,
+    characters (CharacterList, optional): A resource list containing the characters which appear in this event.,
+    creators (CreatorList, optional): A resource list containing creators whose work appears in this event.,
+    next (EventSummary, optional): A summary representation of the event which follows this event.,
+    previous (EventSummary, optional): A summary representation of the event which preceded this event.
+    }
+"""
