@@ -185,6 +185,17 @@ class PyMarvelTestCase(unittest.TestCase):
         print event.description
 
 
+    def test_get_events(self):
+        response = self.m.get_events(characters="1009351,1009718")
+
+        assert response.code == 200
+        assert response.status == 'Ok'
+
+        assert response.data.total > 0
+
+        print "\nMarvel.get_events: \n"
+        for e in response.data.results:
+            print "%s" % e.title
 
 if __name__ == '__main__':
     unittest.main()

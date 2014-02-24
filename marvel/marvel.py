@@ -195,3 +195,26 @@ class Marvel(object):
         url = "%s/%s" % (Event.resource_url(), id)
         response = json.loads(self._call(url).text)
         return EventDataWrapper(self, response)
+        
+        
+    def get_events(self, *args, **kwargs):
+        """Fetches lists of events.
+
+        get /v1/public/events
+
+        Returns a EventDataWrapper object
+
+        >>> #Find all the events that involved both Hulk and Wolverine
+        >>> #hulk's id: 1009351
+        >>> #wolverine's id: 1009718
+        >>> m = Marvel(public_key, private_key)
+        >>> response = m.get_events(characters="1009351,1009718")
+        >>> print response.data.total
+        38
+        >>> events = response.data.results
+        >>> print events[1].title
+        Age of Apocalypse
+        """
+
+        response = json.loads(self._call(Event.resource_url(), self._params(kwargs)).text)
+        return EventDataWrapper(self, response)
