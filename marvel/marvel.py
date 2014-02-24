@@ -13,6 +13,7 @@ import requests
 from .character import Character, CharacterDataWrapper
 from .comic import ComicDataWrapper, Comic
 from .creator import CreatorDataWrapper, Creator
+from .event import EventDataWrapper, Event
 
 DEFAULT_API_VERSION = 'v1'
 
@@ -176,3 +177,21 @@ class Marvel(object):
         
         response = json.loads(self._call(Creator.resource_url(), self._params(kwargs)).text)
         return CreatorDataWrapper(self, response)
+        
+        
+    def get_event(self, id):
+        """Fetches a single event by id.
+
+        get /v1/public/event/{eventId}
+
+        Returns a EventDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> response = m.get_event(253)
+        >>> print response.data.result.title
+        Infinity Gauntlet
+        """
+
+        url = "%s/%s" % (Event.resource_url(), id)
+        response = json.loads(self._call(url).text)
+        return EventDataWrapper(self, response)

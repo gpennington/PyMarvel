@@ -5,23 +5,15 @@ __date__ = '02/07/14'
 
 from .core import MarvelObject, DataWrapper, DataContainer, Summary, List
 
-
-class EventList(List):
-    """
-    EventList object
-    """
-
+class EventDataWrapper(DataWrapper):
     @property
-    def items(self):
-        """
-        Returns List of EventSummary objects
-        """
-        return self.list_to_instance_list(self.dict['items'], EventSummary)
+    def data(self):
+        return EventDataContainer(self.marvel, self.dict['data'])
 
-class EventSummary(Summary):
-    """
-    EventSummary object
-    """
+class EventDataContainer(DataContainer):
+    @property
+    def results(self):
+        return self.list_to_instance_list(self.dict['results'], Event)
 
 class Event(MarvelObject):
     """
@@ -177,3 +169,21 @@ class Event(MarvelObject):
     previous (EventSummary, optional): A summary representation of the event which preceded this event.
     }
 """
+
+
+class EventList(List):
+    """
+    EventList object
+    """
+
+    @property
+    def items(self):
+        """
+        Returns List of EventSummary objects
+        """
+        return self.list_to_instance_list(self.dict['items'], EventSummary)
+
+class EventSummary(Summary):
+    """
+    EventSummary object
+    """

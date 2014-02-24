@@ -7,7 +7,7 @@ from .core import TextObject, Image
 from .creator import CreatorList, CreatorSummary
 from .character import CharacterDataWrapper, CharacterDataContainer, Character, CharacterList, CharacterSummary
 from .story import StoryList, StorySummary
-from .event import EventList, EventSummary
+from .event import EventList, EventSummary, Event
 from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary, ComicDate, ComicPrice
 from .config import *
 
@@ -169,6 +169,20 @@ class PyMarvelTestCase(unittest.TestCase):
         print "\nCreator.get_comics(params): \n"
         for c in comic_dw_params.data.results:
             print "%s - %s" % (c.id, c.title)
+
+
+    def test_get_event(self):
+        event_dw = self.m.get_event(253)
+
+        assert event_dw.code == 200
+        assert event_dw.status == 'Ok'        
+
+        print "\nMarvel.get_event: \n"
+        event = event_dw.data.result
+        assert isinstance(event, Event)
+        assert event.title == "Infinity Gauntlet"
+        print event.title
+        print event.description
 
 
 
