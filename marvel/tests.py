@@ -50,6 +50,26 @@ class PyMarvelTestCase(unittest.TestCase):
             print "%s - %s" % (c.id, c.title)
 
 
+    def test_get_character_get_events(self):
+        character = self.m.get_character(1009718).data.result
+        events_dw = character.get_events()
+
+        assert events_dw.code == 200
+        assert events_dw.status == 'Ok'
+
+        print "\nCharacter.get_events(): \n"
+        for e in events_dw.data.results:
+            print "%s - %s" % (e.id, e.title)
+
+        events_dw_params = character.get_events(orderBy="startDate", limit=10)
+
+        assert events_dw_params.code == 200
+        assert events_dw_params.status == 'Ok'
+
+        print "\nCharacter.get_events(params): \n"
+        for e in events_dw_params.data.results:
+            print "%s - %s" % (e.id, e.title)
+
     def test_get_characters(self):
         cdw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
 

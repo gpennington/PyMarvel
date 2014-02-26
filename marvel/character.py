@@ -113,6 +113,19 @@ class Character(MarvelObject):
         response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
         return ComicDataWrapper(self, response)
         
+    def get_events(self, *args, **kwargs):
+        """
+        Returns a full EventDataWrapper object this character.
+
+        /characters/{characterId}/events
+
+        :returns:  EventDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .event import Event, EventDataWrapper
+        url = "%s/%s/%s" % (Character.resource_url(), self.id, Event.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return EventDataWrapper(self, response)
+        
 
 class CharacterList(List):
     """
