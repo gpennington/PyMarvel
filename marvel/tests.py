@@ -24,6 +24,11 @@ class PyMarvelTestCase(unittest.TestCase):
         self.comic_dw = self.m.get_comic(17731)
         self.comic = self.comic_dw.data.result
         
+        
+        #Grab Stan the Man
+        self.creator_dw = self.m.get_creator(30)
+        self.creator = self.creator_dw.data.result
+
 
 
     def tearDown(self):
@@ -192,19 +197,15 @@ class PyMarvelTestCase(unittest.TestCase):
             
 
     def test_get_creator(self):
-        #Grab Stan the Man
-        cdw = self.m.get_creator(30)
 
         assert cdw.code == 200
         assert cdw.status == 'Ok'
         assert cdw.data.result.firstName == "Stan"
         assert cdw.data.result.lastName == "Lee"
 
-    def test_get_creator_get_comics(self):
-        #Grab Stan the Man
-        theman = self.m.get_creator(30).data.result
+    def test_creator_get_comics(self):
         
-        comic_dw = theman.get_comics()
+        comic_dw = self.creator.get_comics()
 
         assert comic_dw.code == 200
         assert comic_dw.status == 'Ok'
@@ -213,7 +214,7 @@ class PyMarvelTestCase(unittest.TestCase):
         for c in comic_dw.data.results:
             print "%s - %s" % (c.id, c.title)
 
-        comic_dw_params = theman.get_comics(format="comic", formatType="comic", hasDigitalIssue=True, orderBy="title", limit=10, offset=30)
+        comic_dw_params = self.creator.get_comics(format="comic", formatType="comic", hasDigitalIssue=True, orderBy="title", limit=10, offset=30)
 
         assert comic_dw_params.code == 200
         assert comic_dw_params.status == 'Ok'
@@ -221,6 +222,28 @@ class PyMarvelTestCase(unittest.TestCase):
         print "\nCreator.get_comics(params): \n"
         for c in comic_dw_params.data.results:
             print "%s - %s" % (c.id, c.title)
+
+    def test_creator_get_events(self):
+
+        events_dw = self.creator.get_events()
+
+        assert events_dw.code == 200
+        assert events_dw.status == 'Ok'
+
+        print "\nCreator.get_events(): \n"
+        for e in events_dw.data.results:
+            print "%s - %s" % (e.id, e.title)
+
+        events_dw_params = self.creator.get_events(orderBy="startDate")
+
+        assert events_dw_params.code == 200
+        assert events_dw_params.status == 'Ok'
+
+        print "\nCreator.get_events(params): \n"
+        for e in events_dw_params.data.results:
+            print "%s - %s" % (e.id, e.title)
+
+
 
 
     def test_get_event(self):
