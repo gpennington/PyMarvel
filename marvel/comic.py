@@ -3,8 +3,9 @@
 __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
+import json
+
 from .core import MarvelObject, DataWrapper, DataContainer, List, Summary, TextObject, Image
- 
 
 class ComicDataWrapper(DataWrapper):
     @property
@@ -190,6 +191,19 @@ class Comic(MarvelObject):
         response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
         return CharacterDataWrapper(self, response)
 
+
+    def get_events(self, *args, **kwargs):
+        """
+        Returns a full EventDataWrapper object this character.
+
+        /characters/{comicID}/events
+
+        :returns:  EventDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .event import Event, EventDataWrapper
+        url = "%s/%s/%s" % (Comic.resource_url(), self.id, Event.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return EventDataWrapper(self, response)
 
 
 class ComicList(List):

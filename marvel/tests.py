@@ -138,6 +138,25 @@ class PyMarvelTestCase(unittest.TestCase):
         #assert isinstance(cdw.data.results[0].events.items[0], EventSummary)
 
 
+    def test_get_comic_get_events(self):
+        comic = self.m.get_comic(17731).data.result
+        events_dw = comic.get_events()
+
+        assert events_dw.code == 200
+        assert events_dw.status == 'Ok'
+
+        print "\nComic.get_events(): \n"
+        for e in events_dw.data.results:
+            print "%s - %s" % (e.id, e.title)
+
+        events_dw_params = comic.get_events(orderBy="startDate", limit=1)
+
+        assert events_dw_params.code == 200
+        assert events_dw_params.status == 'Ok'
+
+        print "\nComic.get_events(params): \n"
+        for e in events_dw_params.data.results:
+            print "%s - %s" % (e.id, e.title)
 
         
     def test_get_comics(self):
