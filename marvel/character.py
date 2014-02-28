@@ -144,7 +144,17 @@ class Character(MarvelObject):
         """
         from .event import Event, EventDataWrapper
         return self.get_related_resource(Event, EventDataWrapper, args, kwargs)
-        
+
+    def get_series(self, *args, **kwargs):
+        """
+        Returns a full SeriesDataWrapper object this character.
+
+        /characters/{characterId}/series
+
+        :returns:  SeriesDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .series import Series, SeriesDataWrapper
+        return self.get_related_resource(Series, SeriesDataWrapper, args, kwargs)
 
 class CharacterList(List):
     """
