@@ -97,7 +97,30 @@ class Character(MarvelObject):
         Returns ComicList object
         """
         return ComicList(self.marvel, self.dict['comics'])
-        
+
+    @property
+    def events(self):
+        from .event import EventList
+        """
+        Returns EventList object
+        """
+        return EventList(self.marvel, self.dict['events'])
+
+    @property
+    def stories(self):
+        from .story import StoryList
+        """
+        Returns StoryList object
+        """
+        return StoryList(self.marvel, self.dict['comics'])
+
+    @property
+    def series(self):
+        from .series import SeriesList
+        """
+        Returns SeriesList object
+        """
+        return SeriesList(self.marvel, self.dict['series'])
 
     def get_comics(self, *args, **kwargs):
         """

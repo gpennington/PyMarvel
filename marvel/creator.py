@@ -107,11 +107,17 @@ class Creator(MarvelObject):
 
     @property
     def series(self):
+        """
+        Returns SeriesList object
+        """
         from .series import SeriesList
         return SeriesList(self.marvel, self.dict['series'])
 
     @property
     def stories(self):
+        """
+        Returns StoryList object
+        """
         from .story import StoryList
         return StoryList(self.marvel, self.dict['stories'])
 
@@ -125,10 +131,11 @@ class Creator(MarvelObject):
 
     @property
     def events(self):
+        """
+        Returns EventList object
+        """
         from .event import EventList
         return EventList(self.marvel, self.dict['events'])
-        
-
         
     def get_comics(self, *args, **kwargs):
         """
@@ -139,9 +146,7 @@ class Creator(MarvelObject):
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         from .comic import Comic, ComicDataWrapper
-        url = "%s/%s/%s" % (Creator.resource_url(), self.id, Comic.resource_url())
-        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
-        return ComicDataWrapper(self, response)
+        return self.get_related_resource(Comic, ComicDataWrapper, args, kwargs)
 
     def get_events(self, *args, **kwargs):
         """
@@ -152,10 +157,7 @@ class Creator(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        url = "%s/%s/%s" % (Creator.resource_url(), self.id, Event.resource_url())
-        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
-        return EventDataWrapper(self, response)
-
+        return self.get_related_resource(Event, EventDataWrapper, args, kwargs)
 
 class CreatorList(List):
     """

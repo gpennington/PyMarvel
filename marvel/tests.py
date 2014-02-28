@@ -198,10 +198,10 @@ class PyMarvelTestCase(unittest.TestCase):
 
     def test_get_creator(self):
 
-        assert cdw.code == 200
-        assert cdw.status == 'Ok'
-        assert cdw.data.result.firstName == "Stan"
-        assert cdw.data.result.lastName == "Lee"
+        assert self.creator_dw.code == 200
+        assert self.creator_dw.status == 'Ok'
+        assert self.creator.firstName == "Stan"
+        assert self.creator.lastName == "Lee"
 
     def test_creator_get_comics(self):
         
