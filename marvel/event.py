@@ -102,13 +102,11 @@ class Event(MarvelObject):
         from .creator import CreatorList
         return CreatorList(self.marvel, self.dict['creators'])
 
-
-
     @property
     def series(self):
-        #TODO Make series.py
-        return self.dict['stories']
-
+        from .series import SeriesList
+        return SeriesList(self.marvel, self.dict['series'])
+        
     @property
     def next(self):
         return EventSummary(self.marvel, self.dict['next'])
