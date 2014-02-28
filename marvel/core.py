@@ -3,6 +3,7 @@
 __author__ = 'Garrett Pennington'
 __date__ = '02/07/14'
 
+import json
 
 class MarvelObject(object):
     """
@@ -30,10 +31,27 @@ class MarvelObject(object):
         return cls._resource_url
         
     def list_to_instance_list(self, _list, _Class):
+        """
+        Takes a list of dicts and returns a list
+        of resource instances, defined by the _Class param.
+        """
         items = []
         for item in _list:
             items.append(_Class(self.marvel, item))
         return items
+        
+    def get_related_resource(self, _Class, _ClassDataWrapper, *args, **kwargs):
+        """
+        Takes a related resource Class 
+        and returns the related resource DataWrapper.
+        For Example: Given a Character instance, return
+        a ComicsDataWrapper related to that character.
+        /character/{characterId}/comics
+        """
+
+        url = "%s/%s/%s" % (self.resource_url(), self.id, _Class.resource_url())
+        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
+        return _ClassDataWrapper(self, response)
         
 class DataWrapper(MarvelObject):
     """

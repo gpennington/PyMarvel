@@ -51,7 +51,7 @@ class PyMarvelTestCase(unittest.TestCase):
         assert comic_dw.code == 200
         assert comic_dw.status == 'Ok'
         
-        print "\Character.get_comics(): \n"
+        print "\nCharacter.get_comics(): \n"
         for c in comic_dw.data.results:
             print "%s - %s" % (c.id, c.title)
 

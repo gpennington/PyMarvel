@@ -98,21 +98,19 @@ class Character(MarvelObject):
         """
         return ComicList(self.marvel, self.dict['comics'])
         
-        
-        
+
     def get_comics(self, *args, **kwargs):
         """
         Returns a full ComicDataWrapper object this character.
-        
+
         /characters/{characterId}/comics
-        
+
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
-        from .comic import Comic, ComicDataWrapper
-        url = "%s/%s/%s" % (Character.resource_url(), self.id, Comic.resource_url())
-        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
-        return ComicDataWrapper(self, response)
+        from .comic import Comic, ComicDataWrapper        
+        return self.get_related_resource(Comic, ComicDataWrapper, args, kwargs)
         
+    
     def get_events(self, *args, **kwargs):
         """
         Returns a full EventDataWrapper object this character.
@@ -122,9 +120,7 @@ class Character(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        url = "%s/%s/%s" % (Character.resource_url(), self.id, Event.resource_url())
-        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
-        return EventDataWrapper(self, response)
+        return self.get_related_resource(Event, EventDataWrapper, args, kwargs)
         
 
 class CharacterList(List):
