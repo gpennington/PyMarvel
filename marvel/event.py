@@ -120,7 +120,7 @@ class Event(MarvelObject):
         """
         Returns a full CreatorDataWrapper object for this character.
 
-        /events/{comicId}/creators
+        /events/{eventId}/creators
 
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
@@ -131,7 +131,7 @@ class Event(MarvelObject):
         """
         Returns a full CharacterDataWrapper object for this character.
 
-        /events/{comicId}/characters
+        /events/{eventId}/characters
 
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
@@ -142,7 +142,7 @@ class Event(MarvelObject):
         """
         Returns a full ComicDataWrapper object this character.
 
-        /events/{characterId}/comics
+        /events/{eventId}/comics
 
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """

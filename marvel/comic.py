@@ -191,7 +191,7 @@ class Comic(MarvelObject):
         """
         Returns a full EventDataWrapper object this character.
 
-        /characters/{comicID}/events
+        /comics/{comicID}/events
 
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """

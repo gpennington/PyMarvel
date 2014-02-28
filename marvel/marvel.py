@@ -14,6 +14,7 @@ from .character import Character, CharacterDataWrapper
 from .comic import ComicDataWrapper, Comic
 from .creator import CreatorDataWrapper, Creator
 from .event import EventDataWrapper, Event
+from .series import SeriesDataWrapper, Series
 
 DEFAULT_API_VERSION = 'v1'
 
@@ -218,3 +219,43 @@ class Marvel(object):
 
         response = json.loads(self._call(Event.resource_url(), self._params(kwargs)).text)
         return EventDataWrapper(self, response)
+        
+        
+    def get_single_series(self, id):
+        """Fetches a single comic series by id.
+
+        get /v1/public/series/{seriesId}
+
+        Returns a SeriesDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> response = m.get_single_series(12429)
+        >>> print response.data.result.title
+        5 Ronin (2010)
+        """
+
+        url = "%s/%s" % (Series.resource_url(), id)
+        response = json.loads(self._call(url).text)
+        return SeriesDataWrapper(self, response)
+
+
+    def get_series(self, *args, **kwargs):
+        """Fetches lists of events.
+
+        get /v1/public/events
+
+        Returns a EventDataWrapper object
+
+        >>> #Find all the series that involved Wolverine
+        >>> #wolverine's id: 1009718
+        >>> m = Marvel(public_key, private_key)
+        >>> response = m.get_events(characters="1009718")
+        >>> print response.data.total
+        435
+        >>> series = response.data.results
+        >>> print series[0].title
+        5 Ronin (2010)
+        """
+
+        response = json.loads(self._call(Series.resource_url(), self._params(kwargs)).text)
+        return SeriesDataWrapper(self, response)

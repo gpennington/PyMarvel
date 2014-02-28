@@ -17,6 +17,8 @@ class PyMarvelTestCase(unittest.TestCase):
         self.m = Marvel(PUBLIC_KEY, PRIVATE_KEY)
         self.character_dw = self.m.get_character(1009718)
         self.character = self.character_dw.data.result
+        
+        #Move characters to own test, not resused anywhree else
         self.characters_dw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
 
         #TODO: Need a comic with everything
@@ -30,6 +32,9 @@ class PyMarvelTestCase(unittest.TestCase):
         self.creator = self.creator_dw.data.result
 
 
+        #Series
+        self.series_dw = self.m.get_single_series(12429)
+        self.series = self.series_dw.data.result
 
     def tearDown(self):
         pass
@@ -268,10 +273,35 @@ class PyMarvelTestCase(unittest.TestCase):
 
         assert response.data.total > 0
 
-        print "\nMarvel.get_events: \n"
+        print "\nMarvel.get_events(): \n"
         for e in response.data.results:
             print "%s" % e.title
 
+
+
+    def test_get_single_series(self):
+
+        assert self.series_dw.code == 200
+        assert self.series_dw.status == 'Ok'
+        assert self.series.title == "5 Ronin (2010)"
+
+        print "\nMarvel.get_single_series(): \n"
+        print self.series.title
+        
+    def test_get_series(self):
+
+        response = self.m.get_series(characters="1009718", limit=10)
+
+        assert response.code == 200
+        assert response.status == 'Ok'
+
+        assert response.data.total > 0
+
+        print "\nMarvel.get_series(): \n"
+        for s in response.data.results:
+            print "%s" % s.title
+
+        
 if __name__ == '__main__':
     unittest.main()
 
