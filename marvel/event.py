@@ -140,7 +140,7 @@ class Event(MarvelObject):
 
     def get_comics(self, *args, **kwargs):
         """
-        Returns a full ComicDataWrapper object this event.
+        Returns a full ComicDataWrapper object for this event.
 
         /events/{eventId}/comics
 
@@ -159,6 +159,18 @@ class Event(MarvelObject):
         """
         from .series import Series, SeriesDataWrapper
         return self.get_related_resource(Series, SeriesDataWrapper, args, kwargs)
+        
+    def get_stories(self, *args, **kwargs):
+        """
+        Returns a full StoryDataWrapper object for this event.
+
+        /events/{eventId}/stories
+
+        :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .story import Story, StoryDataWrapper
+        return self.get_related_resource(Story, StoryDataWrapper, args, kwargs)
+
 
 """
     Event {

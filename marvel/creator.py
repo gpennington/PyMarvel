@@ -139,7 +139,7 @@ class Creator(MarvelObject):
         
     def get_comics(self, *args, **kwargs):
         """
-        Returns a full ComicDataWrapper object this creator.
+        Returns a full ComicDataWrapper object for this creator.
         
         /creators/{creatorId}/comics
         
@@ -150,7 +150,7 @@ class Creator(MarvelObject):
 
     def get_events(self, *args, **kwargs):
         """
-        Returns a full EventDataWrapper object this creator.
+        Returns a full EventDataWrapper object for this creator.
 
         /creators/{creatorId}/events
 
@@ -161,7 +161,7 @@ class Creator(MarvelObject):
 
     def get_series(self, *args, **kwargs):
         """
-        Returns a full SeriesDataWrapper object this creator.
+        Returns a full SeriesDataWrapper object for this creator.
 
         /creators/{creatorId}/series
 
@@ -169,6 +169,17 @@ class Creator(MarvelObject):
         """
         from .series import Series, SeriesDataWrapper
         return self.get_related_resource(Series, SeriesDataWrapper, args, kwargs)
+
+    def get_stories(self, *args, **kwargs):
+        """
+        Returns a full StoryDataWrapper object for this creator.
+
+        /creators/{creatorId}/stories
+
+        :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
+        """
+        from .story import Story, StoryDataWrapper
+        return self.get_related_resource(Story, StoryDataWrapper, args, kwargs)
 
 class CreatorList(List):
     """
