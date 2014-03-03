@@ -30,17 +30,17 @@ class MarvelObject(object):
     def resource_url(cls):
         return cls._resource_url
         
-    def list_to_instance_list(self, _list, _Class):
+    def list_to_instance_list(_self, _list, _Class):
         """
         Takes a list of dicts and returns a list
         of resource instances, defined by the _Class param.
         """
         items = []
         for item in _list:
-            items.append(_Class(self.marvel, item))
+            items.append(_Class(_self.marvel, item))
         return items
         
-    def get_related_resource(self, _Class, _ClassDataWrapper, *args, **kwargs):
+    def get_related_resource(_self, _Class, _ClassDataWrapper, *args, **kwargs):
         """
         Takes a related resource Class 
         and returns the related resource DataWrapper.
@@ -48,10 +48,9 @@ class MarvelObject(object):
         a ComicsDataWrapper related to that character.
         /character/{characterId}/comics
         """
-
-        url = "%s/%s/%s" % (self.resource_url(), self.id, _Class.resource_url())
-        response = json.loads(self.marvel._call(url, self.marvel._params(kwargs)).text)
-        return _ClassDataWrapper(self, response)
+        url = "%s/%s/%s" % (_self.resource_url(), _self.id, _Class.resource_url())
+        response = json.loads(_self.marvel._call(url, _self.marvel._params(kwargs)).text)
+        return _ClassDataWrapper(_self.marvel, response)
         
 class DataWrapper(MarvelObject):
     """

@@ -15,6 +15,7 @@ class PyMarvelTestCase(unittest.TestCase):
 
     def setUp(self):
         self.m = Marvel(PUBLIC_KEY, PRIVATE_KEY)
+        """
         self.character_dw = self.m.get_character(1009718)
         self.character = self.character_dw.data.result
         
@@ -35,6 +36,7 @@ class PyMarvelTestCase(unittest.TestCase):
         #Series
         self.series_dw = self.m.get_single_series(12429)
         self.series = self.series_dw.data.result
+        """
 
     def tearDown(self):
         pass
@@ -301,6 +303,12 @@ class PyMarvelTestCase(unittest.TestCase):
         for s in response.data.results:
             print "%s" % s.title
 
+
+    def test_chain(self):
+        print "\nMethod Chaining:\n"
+        event = self.m.get_series(characters="1009718").data.result.get_characters().data.results[1].get_comics().data.results[0].get_creators().data.results[0].get_events().data.results[0]
+        assert isinstance(event, Event)
+        print event.title
         
 if __name__ == '__main__':
     unittest.main()

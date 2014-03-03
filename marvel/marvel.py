@@ -54,9 +54,6 @@ class Marvel(object):
             url += "?%s&%s" % (params, self._auth())
         else:
             url += "?%s" % self._auth()
-        
-        #print "url:"
-        #print url
         return requests.get(url)
 
     def _params(self, params):
@@ -249,7 +246,7 @@ class Marvel(object):
         >>> #Find all the series that involved Wolverine
         >>> #wolverine's id: 1009718
         >>> m = Marvel(public_key, private_key)
-        >>> response = m.get_events(characters="1009718")
+        >>> response = m.get_series(characters="1009718")
         >>> print response.data.total
         435
         >>> series = response.data.results
