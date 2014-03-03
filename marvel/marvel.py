@@ -15,6 +15,7 @@ from .comic import ComicDataWrapper, Comic
 from .creator import CreatorDataWrapper, Creator
 from .event import EventDataWrapper, Event
 from .series import SeriesDataWrapper, Series
+from .story import StoryDataWrapper, Story
 
 DEFAULT_API_VERSION = 'v1'
 
@@ -256,3 +257,43 @@ class Marvel(object):
 
         response = json.loads(self._call(Series.resource_url(), self._params(kwargs)).text)
         return SeriesDataWrapper(self, response)
+
+    def get_story(self, id):
+        """Fetches a single story by id.
+
+        get /v1/public/stories/{storyId}
+
+        Returns a EventDataWrapper object
+
+        >>> m = Marvel(public_key, private_key)
+        >>> response = m.get_story(29)
+        >>> print response.data.result.title
+        Caught in the heart of a nuclear explosion, mild-mannered scientist Bruce Banner finds himself...
+        """
+
+        url = "%s/%s" % (Story.resource_url(), id)
+        response = json.loads(self._call(url).text)
+        return StoryDataWrapper(self, response)
+
+
+    def get_stories(self, *args, **kwargs):
+        """Fetches lists of stories.
+
+        get /v1/public/stories
+
+        Returns a StoryDataWrapper object
+
+        >>> #Find all the stories that involved both Hulk and Wolverine
+        >>> #hulk's id: 1009351
+        >>> #wolverine's id: 1009718
+        >>> m = Marvel(public_key, private_key)
+        >>> response = m.get_stories(characters="1009351,1009718")
+        >>> print response.data.total
+        4066
+        >>> stories = response.data.results
+        >>> print stories[1].title
+        Cover #477
+        """
+
+        response = json.loads(self._call(Story.resource_url(), self._params(kwargs)).text)
+        return StoryDataWrapper(self, response)
