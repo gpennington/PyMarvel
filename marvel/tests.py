@@ -6,7 +6,7 @@ from .marvel import Marvel
 from .core import TextObject, Image
 from .creator import CreatorList, CreatorSummary
 from .character import CharacterDataWrapper, CharacterDataContainer, Character, CharacterList, CharacterSummary
-from .story import StoryList, StorySummary
+from .story import StoryList, StorySummary, Story
 from .event import EventList, EventSummary, Event
 from .comic import ComicDataWrapper, ComicDataContainer, Comic, ComicSummary, ComicDate, ComicPrice
 from .config import *
@@ -15,26 +15,29 @@ class PyMarvelTestCase(unittest.TestCase):
 
     def setUp(self):
         self.m = Marvel(PUBLIC_KEY, PRIVATE_KEY)
+        
+        #Character
         self.character_dw = self.m.get_character(1009718)
         self.character = self.character_dw.data.result
         
-        #Move characters to own test, not resused anywhree else
-        self.characters_dw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
-
+        #Comic
         #TODO: Need a comic with everything
-        #self.comic_dw = self.m.get_comic(531)
         self.comic_dw = self.m.get_comic(17731)
         self.comic = self.comic_dw.data.result
-        
-        
+                
+        #Creators
         #Grab Stan the Man
         self.creator_dw = self.m.get_creator(30)
         self.creator = self.creator_dw.data.result
 
-
         #Series
         self.series_dw = self.m.get_single_series(12429)
         self.series = self.series_dw.data.result
+
+        #Story
+        self.story_dw = self.m.get_story(29)
+        self.story = self.story_dw.data.result
+
 
     def tearDown(self):
         pass
@@ -90,30 +93,34 @@ class PyMarvelTestCase(unittest.TestCase):
             print "%s - %s" % (e.id, e.title)
 
     def test_get_characters(self):
+        
+        characters_dw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
 
-        assert self.characters_dw.code == 200
-        assert self.characters_dw.status == 'Ok'
+        assert characters_dw.code == 200
+        assert characters_dw.status == 'Ok'
 
-        assert self.characters_dw.data.count > 0
-        assert self.characters_dw.data.offset == 15
-        assert self.characters_dw.data.limit == 10
-        assert len(self.characters_dw.data.results) > 0
+        assert characters_dw.data.count > 0
+        assert characters_dw.data.offset == 15
+        assert characters_dw.data.limit == 10
+        assert len(characters_dw.data.results) > 0
 
-        assert type(self.characters_dw) is CharacterDataWrapper
-        assert type(self.characters_dw.data) is CharacterDataContainer
-        assert type(self.characters_dw.data.results) is list
+        assert type(characters_dw) is CharacterDataWrapper
+        assert type(characters_dw.data) is CharacterDataContainer
+        assert type(characters_dw.data.results) is list
 
         print "\nMarvel.get_characters():\n"
-        for c in self.characters_dw.data.results:
+        for c in characters_dw.data.results:
             print "%s - %s" % (c.id, c.name)
 
     def test_get_characters_next(self):
-        new_cdw = self.characters_dw.next()
+        
+        characters_dw = self.m.get_characters(orderBy="name,-modified", limit="10", offset="15")
+        new_cdw = characters_dw.next()
 
         assert new_cdw.code == 200
 
         #poor test?
-        assert new_cdw.data.offset == self.characters_dw.data.offset + self.characters_dw.data.limit
+        assert new_cdw.data.offset == characters_dw.data.offset + characters_dw.data.limit
 
 
 
@@ -277,8 +284,6 @@ class PyMarvelTestCase(unittest.TestCase):
         for e in response.data.results:
             print "%s" % e.title
 
-
-
     def test_get_single_series(self):
 
         assert self.series_dw.code == 200
@@ -298,6 +303,28 @@ class PyMarvelTestCase(unittest.TestCase):
         assert response.data.total > 0
 
         print "\nMarvel.get_series(): \n"
+        for s in response.data.results:
+            print "%s" % s.title
+
+
+    def test_get_story(self):
+
+        assert self.story_dw.code == 200
+        assert self.story_dw.status == 'Ok'        
+
+        print "\nMarvel.get_story(): \n"
+        assert isinstance(self.story, Story)
+        print self.story.title
+
+    def test_get_stories(self):
+        
+        response = self.m.get_stories(characters="1009351,1009718", limit=10)
+
+        assert response.code == 200
+        assert response.status == 'Ok'
+        assert response.data.total > 0
+
+        print "\nMarvel.get_events(): \n"
         for s in response.data.results:
             print "%s" % s.title
 
