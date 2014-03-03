@@ -15,7 +15,6 @@ class PyMarvelTestCase(unittest.TestCase):
 
     def setUp(self):
         self.m = Marvel(PUBLIC_KEY, PRIVATE_KEY)
-        """
         self.character_dw = self.m.get_character(1009718)
         self.character = self.character_dw.data.result
         
@@ -36,7 +35,6 @@ class PyMarvelTestCase(unittest.TestCase):
         #Series
         self.series_dw = self.m.get_single_series(12429)
         self.series = self.series_dw.data.result
-        """
 
     def tearDown(self):
         pass
