@@ -5,7 +5,7 @@ version = '0.1.0'
 setup(name='PyMarvel',
       version=version,
       description="Python wrapper for Marvel API",
-      long_description=open("./README.md", "r").read(),
+      long_description=open("README.md", "r").read(),
       classifiers=[
           "Development Status :: 1 - Planning",
           "Environment :: Console",
