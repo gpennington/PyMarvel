@@ -33,7 +33,8 @@ or::
 Basic Usage
 -----------
 
-Create a Marvel instance using your public and private api keys::
+Create a Marvel instance using your public and private api keys:
+
     >>> from marvel.marvel import Marvel
     >>> m = Marvel(public_key, private_key)
     >>> character_data_wrapper = m.get_characters(orderBy="name,-modified", limit="5", offset="15")
@@ -57,7 +58,7 @@ Requesting a resource returns a DataWrapper, which containers information about 
 
 .. note::
 
-   The ``results`` property returns a List, even if only one item is returned.  You can use ``result`` property to retrieve the first (or only) item in the list.  ``result`` is equivilent to ``results[0]``.
+   The ``results`` property returns a List, even if only one item is returned.  You can use ``result`` property to retrieve the first (or only) item in the list.  This is useful for methods like ``get_comic(some_comic_id)`` where only only Comic is expected.  ``result`` is equivalent to ``results[0]``.
 
 ::
 
@@ -70,6 +71,7 @@ Requesting a resource returns a DataWrapper, which containers information about 
     >>> print(character_data_wrapper.data.results[0])
     <marvel.character.Character object>
 
+The json response maps like this::
 
     {                                                     __ 
     "code": 200,                                            |
@@ -96,7 +98,6 @@ Find Stan Lee's comics:
 
     >>> stan_lee = m.get_creator(30).data.result
     >>> comics = stan_lee.get_comics()
-    
 
 You can chain methods into one line:
 
@@ -117,6 +118,7 @@ would be the equivalent to calling::
 
 Pagination
 ----------
+::
 
     >>> xmen = m.get_single_series(403).data.results.get_characters(limit=5)
     >>> for xm in xmen.data.results:

@@ -308,7 +308,7 @@ class PyMarvelTestCase(unittest.TestCase):
 
 
     def test_get_story(self):
-
+        
         assert self.story_dw.code == 200
         assert self.story_dw.status == 'Ok'        
 
