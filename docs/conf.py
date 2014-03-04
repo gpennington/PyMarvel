@@ -32,7 +32,7 @@ sys.path.insert(1,"/Users/garrett/projects/PyMarvel/marvel/")
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinxcontrib.fulltoc'
+    #'sphinxcontrib.fulltoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -1,8 +1,7 @@
 Core Module
 ===========
 
-.. autoclass:: marvel.core.DataWrapper
-
-.. autoclass:: marvel.core.DataContainer
-
-.. autoclass:: marvel.core.MarvelObject
+.. automodule:: marvel.core
+    :members:
+    :undoc-members:
+    :inherited-members:

@@ -8,6 +8,15 @@ import json
 from .core import MarvelObject, DataWrapper, DataContainer, List, Summary, TextObject, Image
 
 class ComicDataWrapper(DataWrapper):
+    """
+    :param marvel: Instance of Marvel class
+    :type marvel: marvel.Marvel
+    :parm dict: Dict of object, created from json response.
+    :type dict: dict
+    :parm params: Optional dict of query params sent to original API call
+    :type params: dict
+    
+    """
     @property
     def data(self):
         return ComicDataContainer(self.marvel, self.dict['data'])
@@ -19,8 +28,10 @@ class ComicDataContainer(DataContainer):
 
 class Comic(MarvelObject):
     """
-    Comic object
-    Takes a dict of character attrs
+    :param marvel: Instance of Marvel class
+    :type marvel: marvel.Marvel
+    :param dict: Dict of object, created from json response.
+    :type dict: dict    
     """
     _resource_url = 'comics'
 

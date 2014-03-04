@@ -4,13 +4,13 @@ PyMarvel
 Python wrapper for the Marvel API
 
 .. toctree::
-    :maxdepth: 3
-
-    index    
-    reference/marvel
-    reference/core
-    reference/character
-
+    :maxdepth: 2
+    
+    api
+    Reference: Marvel <reference/marvel>
+    Reference: Core <reference/core>
+    
+    
 Documentation
 -------------
 
