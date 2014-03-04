@@ -9,7 +9,13 @@ Python wrapper for the Marvel API
     api
     Reference: Marvel <reference/marvel>
     Reference: Core <reference/core>
-    
+    Reference: Character <reference/character>
+    Reference: Comic <reference/comic>
+    Reference: Creator <reference/creator>
+    Reference: Story <reference/story>
+    Reference: Series <reference/series>
+    Reference: Event <reference/event>
+
     
 Documentation
 -------------
