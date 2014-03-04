@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/gpennington/PyMarvel.png?branch=master)](https://travis-ci.org/gpennington/PyMarvel)
+^ The build is working... but the API rate limit is very, very small.
 
 PyMarvel
 ========
@@ -7,7 +8,7 @@ Python wrapper for Marvel API
 
 http://developer.marvel.com/
 
-Full Documentation at https://readthedocs.org/projects/pymarvel/
+Full Documentation at http://pymarvel.readthedocs.org
 
 Why is this useful?
 ===================

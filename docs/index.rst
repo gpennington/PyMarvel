@@ -20,7 +20,7 @@ Python wrapper for the Marvel API
 Documentation
 -------------
 
-Read the full `documentation <https://readthedocs.org/projects/PyMarvel/>`__.
+Read the full `documentation <http://pymarvel.readthedocs.org>`__.
 
 
 Installation
