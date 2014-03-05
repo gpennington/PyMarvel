@@ -216,7 +216,7 @@ class List(MarvelObject):
         
         :returns: int
         """
-        return int(elf.dict['returned'])
+        return int(self.dict['returned'])
 
     @property
     def collectionURI(self):

@@ -7,3 +7,4 @@ docs/_templates
 notes.txt
 reports/coverage_html/
 .coverage
+dist/
