@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/gpennington/PyMarvel.png?branch=master)](https://travis-ci.org/gpennington/PyMarvel)
-^ The build is working... but the API rate limit is very, very small.
+
+^ Hopefully, the build is working... but sometimes reports as broken because the API rate limit is very, very small.
 
 PyMarvel
 ========
