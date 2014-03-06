@@ -24,7 +24,7 @@ class ComicDataWrapper(DataWrapper):
 class ComicDataContainer(DataContainer):
     @property
     def results(self):
-        return self.list_to_instance_list(self.dict['results'], Comic)
+        return self._list_to_instance_list(self.dict['results'], Comic)
 
 class Comic(MarvelObject):
     """
@@ -104,7 +104,7 @@ class Comic(MarvelObject):
         """
         :returns: list -- List of TextObjects
         """
-        return self.list_to_instance_list(self.dict['textObjects'], TextObject)
+        return self._list_to_instance_list(self.dict['textObjects'], TextObject)
 
     @property
     def resourceURI(self):
@@ -123,29 +123,29 @@ class Comic(MarvelObject):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_instance_list(self.dict['variants'], ComicSummary)
+        return self._list_to_instance_list(self.dict['variants'], ComicSummary)
                     
     @property
     def collections(self):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_instance_list(self.dict['collections'], ComicSummary)
+        return self._list_to_instance_list(self.dict['collections'], ComicSummary)
 
     @property
     def collectedIssues(self):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_instance_list(self.dict['collectedIssues'], ComicSummary)
+        return self._list_to_instance_list(self.dict['collectedIssues'], ComicSummary)
 
     @property
     def dates(self):
-        return self.list_to_instance_list(self.dict['dates'], ComicDate)
+        return self._list_to_instance_list(self.dict['dates'], ComicDate)
 
     @property
     def prices(self):
-        return self.list_to_instance_list(self.dict['prices'], ComicPrice)
+        return self._list_to_instance_list(self.dict['prices'], ComicPrice)
 
     @property
     def thumbnail(self):
@@ -153,7 +153,7 @@ class Comic(MarvelObject):
 
     @property
     def images(self):
-        return self.list_to_instance_list(self.dict['images'], Image)
+        return self._list_to_instance_list(self.dict['images'], Image)
 
     @property
     def creators(self):
@@ -185,7 +185,7 @@ class Comic(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .creator import Creator, CreatorDataWrapper
-        return self.get_related_resource(Creator, CreatorDataWrapper, args, kwargs)
+        return self._get_related_resource(Creator, CreatorDataWrapper, args, kwargs)
 
     def get_characters(self, *args, **kwargs):
         """
@@ -196,7 +196,7 @@ class Comic(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .character import Character, CharacterDataWrapper
-        return self.get_related_resource(Character, CharacterDataWrapper, args, kwargs)
+        return self._get_related_resource(Character, CharacterDataWrapper, args, kwargs)
 
     def get_events(self, *args, **kwargs):
         """
@@ -207,7 +207,7 @@ class Comic(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        return self.get_related_resource(Event, EventDataWrapper, args, kwargs)
+        return self._get_related_resource(Event, EventDataWrapper, args, kwargs)
         
     def get_stories(self, *args, **kwargs):
         """
@@ -218,7 +218,7 @@ class Comic(MarvelObject):
         :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .story import Story, StoryDataWrapper
-        return self.get_related_resource(Story, StoryDataWrapper, args, kwargs)
+        return self._get_related_resource(Story, StoryDataWrapper, args, kwargs)
 
 
 class ComicList(List):
@@ -231,7 +231,7 @@ class ComicList(List):
         """
         Returns List of ComicSummary objects
         """
-        return self.list_to_instance_list(self.dict['items'], ComicSummary)
+        return self._list_to_instance_list(self.dict['items'], ComicSummary)
 
 class ComicSummary(Summary):
     """

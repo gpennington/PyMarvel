@@ -36,7 +36,7 @@ class MarvelObject(object):
         """
         return cls._resource_url
         
-    def list_to_instance_list(_self, _list, _Class):
+    def _list_to_instance_list(_self, _list, _Class):
         """
         Takes a list of resource dicts and returns a list
         of resource instances, defined by the _Class param.
@@ -55,7 +55,7 @@ class MarvelObject(object):
             items.append(_Class(_self.marvel, item))
         return items
         
-    def get_related_resource(_self, _Class, _ClassDataWrapper, *args, **kwargs):
+    def _get_related_resource(_self, _Class, _ClassDataWrapper, *args, **kwargs):
         """
         Takes a related resource Class 
         and returns the related resource DataWrapper.

@@ -13,7 +13,7 @@ class SeriesDataWrapper(DataWrapper):
 class SeriesDataContainer(DataContainer):
     @property
     def results(self):
-        return self.list_to_instance_list(self.dict['results'], Series)
+        return self._list_to_instance_list(self.dict['results'], Series)
 
 class Series(MarvelObject):
     """
@@ -112,7 +112,7 @@ class Series(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .creator import Creator, CreatorDataWrapper
-        return self.get_related_resource(Creator, CreatorDataWrapper, args, kwargs)
+        return self._get_related_resource(Creator, CreatorDataWrapper, args, kwargs)
 
     def get_characters(self, *args, **kwargs):
         """
@@ -123,7 +123,7 @@ class Series(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .character import Character, CharacterDataWrapper
-        return self.get_related_resource(Character, CharacterDataWrapper, args, kwargs)
+        return self._get_related_resource(Character, CharacterDataWrapper, args, kwargs)
 
     def get_comics(self, *args, **kwargs):
         """
@@ -134,7 +134,7 @@ class Series(MarvelObject):
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         from .comic import Comic, ComicDataWrapper        
-        return self.get_related_resource(Comic, ComicDataWrapper, args, kwargs)
+        return self._get_related_resource(Comic, ComicDataWrapper, args, kwargs)
 
     def get_events(self, *args, **kwargs):
         """
@@ -145,7 +145,7 @@ class Series(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        return self.get_related_resource(Event, EventDataWrapper, args, kwargs)
+        return self._get_related_resource(Event, EventDataWrapper, args, kwargs)
         
     def get_stories(self, *args, **kwargs):
         """
@@ -156,7 +156,7 @@ class Series(MarvelObject):
         :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .story import Story, StoryDataWrapper
-        return self.get_related_resource(Story, StoryDataWrapper, args, kwargs)
+        return self._get_related_resource(Story, StoryDataWrapper, args, kwargs)
 
 
 class SeriesList(List):
@@ -169,7 +169,7 @@ class SeriesList(List):
         """
         Returns List of SeriesSummary objects
         """
-        return self.list_to_instance_list(self.dict['items'], SeriesSummary)
+        return self._list_to_instance_list(self.dict['items'], SeriesSummary)
 
 class SeriesSummary(Summary):
     """
