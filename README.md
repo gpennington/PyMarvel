@@ -110,7 +110,7 @@ would be the equivalent to calling:
 Pagination
 ==========
 
-    >>> xmen = m.get_single_series(403).data.results.get_characters(limit=5)
+    >>> xmen = m.get_single_series(403).data.result.get_characters(limit=5)
     >>> for xm in xmen.data.results:
     ...     print xm.name
     
