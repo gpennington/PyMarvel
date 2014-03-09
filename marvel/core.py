@@ -55,7 +55,7 @@ class MarvelObject(object):
             items.append(_Class(_self.marvel, item))
         return items
         
-    def _get_related_resource(_self, _Class, _ClassDataWrapper, *args, **kwargs):
+    def _get_related_resource(_self, _Class, _ClassDataWrapper, params):
         """
         Takes a related resource Class 
         and returns the related resource DataWrapper.
@@ -67,13 +67,13 @@ class MarvelObject(object):
         :type _Class: core.MarvelObject
         :param _ClassDataWrapper: The Resource response object
         :type _Class: core.MarvelObject
-        :param kwargs: dict of query params for the API
-        :type kwargs: dict
+        :param params: dict of query params for the API
+        :type params: dict
         
         :returns:  DataWrapper -- DataWrapper for requested Resource
         """
         url = "%s/%s/%s" % (_self.resource_url(), _self.id, _Class.resource_url())
-        response = json.loads(_self.marvel._call(url, _self.marvel._params(kwargs)).text)
+        response = json.loads(_self.marvel._call(url, _self.marvel._params(params)).text)
         return _ClassDataWrapper(_self.marvel, response)
         
 class DataWrapper(MarvelObject):

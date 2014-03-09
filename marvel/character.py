@@ -12,23 +12,6 @@ class CharacterDataWrapper(DataWrapper):
     def data(self):
         return CharacterDataContainer(self.marvel, self.dict['data'])
 
-    def next(self):
-        """
-        Returns new CharacterDataWrapper
-        TODO: Don't raise offset past count - limit
-        """
-        self.params['offset'] = str(int(self.params['offset']) + int(self.params['limit']))
-        return self.marvel.get_characters(self.marvel, (), **self.params)
-
-    def previous(self):
-        """
-        Returns new CharacterDataWrapper
-        TODO: Don't lower offset below 0
-        """
-        self.params['offset'] = str(int(self.params['offset']) - int(self.params['limit']))
-        return self.marvel.get_characters(self.marvel, (), **self.params)
-
-
 class CharacterDataContainer(DataContainer):
     @property
     def results(self):
@@ -122,7 +105,7 @@ class Character(MarvelObject):
         """
         return SeriesList(self.marvel, self.dict['series'])
 
-    def get_comics(self, *args, **kwargs):
+    def get_comics(self, params=None):
         """
         Returns a full ComicDataWrapper object this character.
 
@@ -131,10 +114,10 @@ class Character(MarvelObject):
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         from .comic import Comic, ComicDataWrapper        
-        return self._get_related_resource(Comic, ComicDataWrapper, args, kwargs)
+        return self._get_related_resource(Comic, ComicDataWrapper, params)
         
     
-    def get_events(self, *args, **kwargs):
+    def get_events(self, params=None):
         """
         Returns a full EventDataWrapper object this character.
 
@@ -143,9 +126,9 @@ class Character(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        return self._get_related_resource(Event, EventDataWrapper, args, kwargs)
+        return self._get_related_resource(Event, EventDataWrapper, params)
 
-    def get_series(self, *args, **kwargs):
+    def get_series(self, params=None):
         """
         Returns a full SeriesDataWrapper object this character.
 
@@ -154,9 +137,9 @@ class Character(MarvelObject):
         :returns:  SeriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .series import Series, SeriesDataWrapper
-        return self._get_related_resource(Series, SeriesDataWrapper, args, kwargs)
+        return self._get_related_resource(Series, SeriesDataWrapper, params)
 
-    def get_stories(self, *args, **kwargs):
+    def get_stories(self, params=None):
         """
         Returns a full StoryDataWrapper object this character.
 
@@ -165,7 +148,7 @@ class Character(MarvelObject):
         :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .story import Story, StoryDataWrapper
-        return self._get_related_resource(Story, StoryDataWrapper, args, kwargs)
+        return self._get_related_resource(Story, StoryDataWrapper, params)
 
 class CharacterList(List):
     """

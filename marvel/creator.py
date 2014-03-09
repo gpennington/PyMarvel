@@ -137,7 +137,7 @@ class Creator(MarvelObject):
         from .event import EventList
         return EventList(self.marvel, self.dict['events'])
         
-    def get_comics(self, *args, **kwargs):
+    def get_comics(self, params=None):
         """
         Returns a full ComicDataWrapper object for this creator.
         
@@ -146,9 +146,9 @@ class Creator(MarvelObject):
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         from .comic import Comic, ComicDataWrapper
-        return self._get_related_resource(Comic, ComicDataWrapper, args, kwargs)
+        return self._get_related_resource(Comic, ComicDataWrapper, params)
 
-    def get_events(self, *args, **kwargs):
+    def get_events(self, params=None):
         """
         Returns a full EventDataWrapper object for this creator.
 
@@ -157,9 +157,9 @@ class Creator(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        return self._get_related_resource(Event, EventDataWrapper, args, kwargs)
+        return self._get_related_resource(Event, EventDataWrapper, params)
 
-    def get_series(self, *args, **kwargs):
+    def get_series(self, params=None):
         """
         Returns a full SeriesDataWrapper object for this creator.
 
@@ -168,9 +168,9 @@ class Creator(MarvelObject):
         :returns:  SeriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .series import Series, SeriesDataWrapper
-        return self._get_related_resource(Series, SeriesDataWrapper, args, kwargs)
+        return self._get_related_resource(Series, SeriesDataWrapper, params)
 
-    def get_stories(self, *args, **kwargs):
+    def get_stories(self, params=None):
         """
         Returns a full StoryDataWrapper object for this creator.
 
@@ -179,7 +179,7 @@ class Creator(MarvelObject):
         :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .story import Story, StoryDataWrapper
-        return self._get_related_resource(Story, StoryDataWrapper, args, kwargs)
+        return self._get_related_resource(Story, StoryDataWrapper, params)
 
 class CreatorList(List):
     """

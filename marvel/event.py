@@ -116,7 +116,7 @@ class Event(MarvelObject):
         return EventSummary(self.marvel, self.dict['previous'])
 
 
-    def get_creators(self, *args, **kwargs):
+    def get_creators(self, params=None):
         """
         Returns a full CreatorDataWrapper object for this event.
 
@@ -125,9 +125,9 @@ class Event(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .creator import Creator, CreatorDataWrapper
-        return self._get_related_resource(Creator, CreatorDataWrapper, args, kwargs)
+        return self._get_related_resource(Creator, CreatorDataWrapper, params)
 
-    def get_characters(self, *args, **kwargs):
+    def get_characters(self, params=None):
         """
         Returns a full CharacterDataWrapper object for this event.
 
@@ -136,9 +136,9 @@ class Event(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .character import Character, CharacterDataWrapper
-        return self._get_related_resource(Character, CharacterDataWrapper, args, kwargs)
+        return self._get_related_resource(Character, CharacterDataWrapper, params)
 
-    def get_comics(self, *args, **kwargs):
+    def get_comics(self, params=None):
         """
         Returns a full ComicDataWrapper object for this event.
 
@@ -147,9 +147,9 @@ class Event(MarvelObject):
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         from .comic import Comic, ComicDataWrapper
-        return self._get_related_resource(Comic, ComicDataWrapper, args, kwargs)
+        return self._get_related_resource(Comic, ComicDataWrapper, params)
 
-    def get_series(self, *args, **kwargs):
+    def get_series(self, params=None):
         """
         Returns a full SeriesDataWrapper object for this event.
 
@@ -158,9 +158,9 @@ class Event(MarvelObject):
         :returns:  SeriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .series import Series, SeriesDataWrapper
-        return self._get_related_resource(Series, SeriesDataWrapper, args, kwargs)
+        return self._get_related_resource(Series, SeriesDataWrapper, params)
         
-    def get_stories(self, *args, **kwargs):
+    def get_stories(self, params=None):
         """
         Returns a full StoryDataWrapper object for this event.
 
@@ -169,7 +169,7 @@ class Event(MarvelObject):
         :returns:  StoriesDataWrapper -- A new request to API. Contains full results set.
         """
         from .story import Story, StoryDataWrapper
-        return self._get_related_resource(Story, StoryDataWrapper, args, kwargs)
+        return self._get_related_resource(Story, StoryDataWrapper, params)
 
 
 """

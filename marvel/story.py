@@ -88,7 +88,7 @@ class Story(MarvelObject):
         return ComicSummary(self.marvel, self.dict['originalIssue'])
 
         
-    def get_creators(self, *args, **kwargs):
+    def get_creators(self, params=None):
         """
         Returns a full CreatorDataWrapper object for this story.
 
@@ -97,9 +97,9 @@ class Story(MarvelObject):
         :returns:  CreatorDataWrapper -- A new request to API. Contains full results set.
         """
         from .creator import Creator, CreatorDataWrapper
-        return self._get_related_resource(Creator, CreatorDataWrapper, args, kwargs)
+        return self._get_related_resource(Creator, CreatorDataWrapper, params)
 
-    def get_characters(self, *args, **kwargs):
+    def get_characters(self, params=None):
         """
         Returns a full CharacterDataWrapper object for this story.
 
@@ -108,9 +108,9 @@ class Story(MarvelObject):
         :returns:  CharacterDataWrapper -- A new request to API. Contains full results set.
         """
         from .character import Character, CharacterDataWrapper
-        return self._get_related_resource(Character, CharacterDataWrapper, args, kwargs)
+        return self._get_related_resource(Character, CharacterDataWrapper, params)
 
-    def get_comics(self, *args, **kwargs):
+    def get_comics(self, params=None):
         """
         Returns a full ComicDataWrapper object this story.
 
@@ -119,9 +119,9 @@ class Story(MarvelObject):
         :returns:  ComicDataWrapper -- A new request to API. Contains full results set.
         """
         from .comic import Comic, ComicDataWrapper        
-        return self._get_related_resource(Comic, ComicDataWrapper, args, kwargs)
+        return self._get_related_resource(Comic, ComicDataWrapper, params)
 
-    def get_events(self, *args, **kwargs):
+    def get_events(self, params=None):
         """
         Returns a full EventDataWrapper object this story.
 
@@ -130,7 +130,7 @@ class Story(MarvelObject):
         :returns:  EventDataWrapper -- A new request to API. Contains full results set.
         """
         from .event import Event, EventDataWrapper
-        return self._get_related_resource(Event, EventDataWrapper, args, kwargs)
+        return self._get_related_resource(Event, EventDataWrapper, params)
 
 
 class StoryList(List):
