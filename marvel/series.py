@@ -100,7 +100,7 @@ class Series(MarvelObject):
         return SeriesSummary(self.marvel, self.dict['next'])
 
     @property
-    def previoius(self):
+    def previous(self):
         return SeriesSummary(self.marvel, self.dict['previous'])
         
     def get_creators(self, *args, **kwargs):
