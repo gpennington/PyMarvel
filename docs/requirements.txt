@@ -1,2 +1,2 @@
-requests==2.2.1
+requests==2.20.0
 sphinxcontrib-fulltoc==1.0
